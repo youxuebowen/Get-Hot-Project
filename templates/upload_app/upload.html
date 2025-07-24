@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel用户上传系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Excel用户上传</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post" enctype="multipart/form-data" id="uploadForm">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                {{ form.excel_file.label_tag }}
+                                {{ form.excel_file }}
+                                <div class="form-text">{{ form.excel_file.help_text }}</div>
+                                {% if form.excel_file.errors %}
+                                    <div class="text-danger">{{ form.excel_file.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span id="submitText">发送邮件</span>
+                                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                            </button>
+                        </form>
+
+                        <div class="mt-4">
+                            <h5>Excel文件格式要求：</h5>
+                            <ul>
+                                <li>第一行必须包含表头：用户名、邮箱、校验码</li>
+                                <li>文件格式：.xlsx 或 .xls</li>
+                                <li><a href="{% static 'upload_app/sample.xlsx' %}" download>下载示例文件</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'upload_app/js/main.js' %}"></script>
+</body>
+</html>

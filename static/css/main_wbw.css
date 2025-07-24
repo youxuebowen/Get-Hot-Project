@@ -1,0 +1,193 @@
+和原来文件的css有冲突
+        :root {
+            --primary-blue: #1e88e5;
+            --light-blue: #e3f2fd;
+            --medium-blue: #90caf9;
+            --dark-blue: #0d47a1;
+            --border-blue: #bbdefb;
+        }
+        
+        /* body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f3ff 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        } */
+        
+        .container {
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+            
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(30, 136, 229, 0.2);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 1.5rem;
+            border-bottom: 3px solid var(--border-blue);
+        }
+        
+        .card-header h3 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .card-body {
+            padding: 2rem;
+            background-color: #fff;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border: 2px solid var(--border-blue);
+            border-radius: 8px;
+            padding: 0.75rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.25);
+        }
+        
+        .form-text {
+            color: #607d8b;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 1rem;
+            background-color: var(--light-blue);
+            border: 2px dashed var(--medium-blue);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--primary-blue);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background-color: #d1eaff;
+            border-color: var(--primary-blue);
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background-color: #f8fdff;
+            border-radius: 6px;
+            color: #1565c0;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--primary-blue);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover, .btn-primary:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(30, 136, 229, 0.4);
+            background: linear-gradient(to right, #1976d2, #0b3d91);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .requirements {
+            background-color: var(--light-blue);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .requirements h5 {
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--medium-blue);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .requirements ul {
+            padding-left: 1.2rem;
+        }
+        
+        .requirements li {
+            margin-bottom: 0.7rem;
+            color: #37474f;
+        }
+        
+        .requirements a {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .requirements a:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 71, 161, 0.2);
+        }
+        
+        .alert {
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .spinner-border {
+            vertical-align: text-bottom;
+        }

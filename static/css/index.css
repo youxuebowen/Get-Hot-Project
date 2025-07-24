@@ -1,0 +1,11 @@
+body{
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.logo{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+}
+
+/* 卡片高度一定，设置拉条 */
+.card-body{height:100px}

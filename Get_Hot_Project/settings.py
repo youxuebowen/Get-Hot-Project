@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-tl55p^l&j1ctfbz^#dx0(evbz*+*_sh_^dj6a7kiwa@%6(9s&c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# 上线之后改为false，ALLOWED_HOSTS也需要改
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -37,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Send_Email.apps.SendEmailConfig",  # 注册子应用，爬取的数据存储到数据库中，并发送邮件
     "upload_app.apps.UploadAppConfig",  # 注册子应用，上传excel文件，将数据存储到数据库中
 ]
 
@@ -56,7 +56,7 @@ ROOT_URLCONF = "Get_Hot_Project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],  # 添加模板目录
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -120,19 +120,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-Hans' #"en-us"设置语言
 
-TIME_ZONE = "UTC"
-
+# TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'upload_app/static')]
-
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, '..', 'static'),  # 新增这行
+# ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
