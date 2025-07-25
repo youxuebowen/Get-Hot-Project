@@ -608,14 +608,14 @@ def send_welcome_email(usernames, Emails, verification_codes):
     :return: 发送成功返回 True，失败返回 Falseauth_user
     """
     mailserver = 'smtp.qq.com'
-    subject = '每周技术热点推送！'
+    subject = '【WideSeek】每周技术热点推送！'
     userName_SendMail = Emails[0]
     userName_AuthCode = verification_codes[0]
     projects = get_hot_projects()
     for username, Email, verification_code in zip(usernames[1:], Emails[1:], verification_codes[1:]):
         message = ""
         for project in projects:
-            message += f'项目名称: {project["name"]}\n项目内容: {project["description"]}\n\n'
+            message += f'热点标题：{project["name"]}\n\n内容速览:\n {project["description"]}\n链接地址: {project["url"]}\n\n\n'
             # get_tage_projects(content=project["content"])
         message = f"尊敬的 {username}，以下是本周技术热点推送：\n\n{message}"
         email = MIMEText(message, "plain", "utf-8")
