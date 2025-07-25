@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="{% static 'css/search.css' %}">
         <link rel="stylesheet" href="{% static 'css/new_search.css' %}">
+        <link rel="stylesheet" href="{% static 'css/charts.css' %}">
 
 
 </head>
@@ -33,9 +34,9 @@
     <!-- 头部区域 -->
     <div class="header">
         <div class="logo">
-            <img src="{% static 'image/gongsi1.png' %}" alt="中国移动" />
+            <img src="{% static 'image/gongsi1.png' %}" alt="公司logo" />
             <span class="logo-text">WideSeek信息脉搏AI助手</span>
-            <!--<span class="sub-title">江苏翊栋</span>-->
+            <span class="sub-title">苏云邮侠团队提供</span>
         </div>
                 <!-- 时间展示 -->
         <div class="date-display">
@@ -87,24 +88,134 @@
 
         <!-- 主内容区 全部复制）-->
         <div class="main-content">
-                <div class="page-title-container">
-                <div class="aether-vault">
-                    <h1 class="crystalline-cascade">技术热点推送平台</h1>
-                <div class="lunar-veil">
-                    热门guitab技术/热门文章/邮件推送管理平台
-                </div>
-        </div>
-
-    </div>
+            <div class="page-title-container">
+            </div>
 
 
             <!-- 首页内容 -->
             <div id="home-content" class="content-section active">
+                <div class="chart-container">
+        <div class="chart-header">
+            <h1><i class="fas fa-chart-line"></i> GitHub应用与文章分析平台</h1>
+            <p>实时监控热门GitHub项目、技术文章和安全漏洞数据，提供全面的技术趋势分析</p>
+        </div>
+
+        <!-- 6个数据盒子 -->
+        <div class="chart-stats-container">
+            <div class="chart-stats-box">
+                <div class="chart-stats-icon"><i class="fas fa-newspaper"></i></div>
+                <div class="chart-stats-title">热点文章总数</div>
+                <div class="chart-stats-value" id="chartHotArticlesTotal">--</div>
+                <div class="chart-stats-change" id="chartHotArticlesChange">加载中...</div>
             </div>
 
-            
-            <!-- 展示界面 -->
+            <div class="chart-stats-box">
+                <div class="chart-stats-icon"><i class="fab fa-github"></i></div>
+                <div class="chart-stats-title">热门GitHub项目总数</div>
+                <div class="chart-stats-value" id="chartHotProjectsTotal">--</div>
+                <div class="chart-stats-change" id="chartHotProjectsChange">加载中...</div>
+            </div>
+
+            <div class="chart-stats-box">
+                <div class="chart-stats-icon"><i class="fas fa-paper-plane"></i></div>
+                <div class="chart-stats-title">已推送文章/应用数</div>
+                <div class="chart-stats-value" id="chartPushedTotal">--</div>
+                <div class="chart-stats-change" id="chartPushedChange">加载中...</div>
+            </div>
+
+            <div class="chart-stats-box">
+                <div class="chart-stats-icon"><i class="fas fa-inbox"></i></div>
+                <div class="chart-stats-title">待发送文章/应用数</div>
+                <div class="chart-stats-value" id="chartToPushTotal">--</div>
+                <div class="chart-stats-change" id="chartToPushChange">加载中...</div>
+            </div>
+
+            <div class="chart-stats-box">
+                <div class="chart-stats-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="chart-stats-title">已搜集安全漏洞总数</div>
+                <div class="chart-stats-value" id="chartVulnerabilitiesTotal">--</div>
+                <div class="chart-stats-change" id="chartVulnerabilitiesChange">加载中...</div>
+            </div>
+
+            <div class="chart-stats-box">
+                <div class="chart-stats-icon"><i class="fas fa-bug"></i></div>
+                <div class="chart-stats-title">昨日搜集安全漏洞数</div>
+                <div class="chart-stats-value" id="chartYesterdayVulns">--</div>
+                <div class="chart-stats-change" id="chartYesterdayVulnsChange">加载中...</div>
+            </div>
+        </div>
+
+
+
+        <!-- 柱状图表 -->
+        <div class="chart-graph-container">
+            <div class="chart-graph-box">
+                <div class="chart-graph-title"><i class="fas fa-tags"></i> 热点文章标签分布 (Top 10)</div>
+                <div class="chart-graph-wrapper">
+                    <div id="chartTagArticleBar" class="chart-graph"></div>
+                </div>
+                <button class="chart-update-btn" onclick="updateArticleData()">
+                    <i class="fas fa-sync-alt"></i> 更新文章数据
+                </button>
+            </div>
+
+            <div class="chart-graph-box">
+                <div class="chart-graph-title"><i class="fab fa-github"></i> 热门GitHub项目标签分布 (Top 10)</div>
+                <div class="chart-graph-wrapper">
+                    <div id="chartTagProjectBar" class="chart-graph"></div>
+                </div>
+                <button class="chart-update-btn" onclick="updateProjectData()">
+                    <i class="fas fa-sync-alt"></i> 更新项目数据
+                </button>
+            </div>
+        </div>
+
+        <!-- 饼状图图表 -->
+        <div class="chart-graph-container">
+            <div class="chart-graph-box">
+                <div class="chart-graph-title"><i class="fas fa-chart-pie"></i> 热点文章标签占比 (Top 8)</div>
+                <div class="chart-graph-wrapper">
+                    <div id="chartTagArticlePie" class="chart-graph"></div>
+                </div>
+            </div>
+
+            <div class="chart-graph-box">
+                <div class="chart-graph-title"><i class="fas fa-chart-pie"></i> 热门GitHub项目标签占比 (Top 8)</div>
+                <div class="chart-graph-wrapper">
+                    <div id="chartTagProjectPie" class="chart-graph"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-bottom-container">
+            <div class="chart-graph-box chart-bottom-graph">
+                <div class="chart-graph-title"><i class="fas fa-chart-line"></i> 每周新增趋势</div>
+                <div class="chart-graph-wrapper">
+                    <div id="chartWeeklyTrend" class="chart-graph"></div>
+                </div>
+                <button class="chart-update-btn" onclick="updateTrendData()">
+                    <i class="fas fa-sync-alt"></i> 更新趋势数据
+                </button>
+            </div>
+        </div>
+
+        <div class="chart-footer">
+            <p>数据更新时间: <span id="chartUpdateTime">2023年10月15日 14:30:45</span> | 数据源: GitHub API & 安全漏洞数据库</p>
+        </div>
+    </div>
+            </div>
+
+
+            <!-- 功能1界面 -->
             <div id="github-projects-content" class="content-section">
+                <!-- 题目 -->
+                <div class="aether-vault">
+                    <h1 class="crystalline-cascade">技术热点展示功能</h1>
+                    <div class="lunar-veil">
+                        热门guitab技术/热门文章展示、查询、提交
+                    </div>
+                </div>
+
                 <!-- 搜索功能 -->
                 <h1 class="page-title fancy-title fancy-title--github-projects" id="unique-title-github-projects">GitHub项目/文章检索</h1>
                 <div id="github-search-wrapper">
@@ -113,14 +224,14 @@
                             <h1><i class="bi bi-search-heart"></i>关键词检索功能</h1>
                             <p>使用筛选条件精确查找所需内容，支持自定义时间范围、类型筛选和多标签选择</p>
                         </div>
-                        
+
                         <div class="dps-search-box">
                             <input type="text" class="dps-search-input" placeholder="输入关键词搜索...">
                             <button class="dps-search-btn" id="dps-search-button">
                                 <i class="bi bi-search"></i> 搜索
                             </button>
                         </div>
-                        
+
                         <div class="dps-options-row">
                             <!-- 时间范围选择器 -->
                             <div class="dps-option-group">
@@ -149,7 +260,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- 类型选择器 -->
                             <div class="dps-option-group">
                                 <label class="dps-option-label"><i class="bi bi-collection"></i> 类型</label>
@@ -163,7 +274,7 @@
                                     <div class="dps-tag-option" data-value="article">文章</div>
                                 </div>
                             </div>
-                            
+
                             <!-- 标签选择器 -->
                             <div class="dps-option-group">
                                 <label class="dps-option-label"><i class="bi bi-tags"></i> 标签</label>
@@ -181,16 +292,16 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="dps-footer">
                             高级搜索面板 &copy; 2025 | 支持自定义时间范围和多标签筛选
                         </div>
                     </div>
                 </div>
-                
+
 
 <br>
-<hr>        
+<hr>
             <!-- 展示功能 -->
                 <h1 class="page-title fancy-title fancy-title--push-list" id="unique-title-push-list">推送列表</h1>
                 <div class="table-container" id="data-container" style="max-height: 500px; overflow-y: auto">
@@ -232,14 +343,22 @@
                             <button id="submit-to-push" class="btn btn-primary"
                                 style="padding: 8px 20px;">提交到推送</button>
                         </div>
-                    </div>               
+                    </div>
                 </div>
             </div>
 
 
 
-    <!-- 用户管理内容 -->
+    <!-- 功能2界面 ：用户管理内容 -->
             <div id="users-content" class="content-section">
+                <!-- 题目 -->
+                <div class="aether-vault">
+                    <h1 class="crystalline-cascade">热点推送管理功能</h1>
+                    <div class="lunar-veil">
+                        热门guitab技术/热门文章管理、自定义发送
+                    </div>
+                </div>
+
                  <h1 class="page-title fancy-title fancy-title--push-management" id="unique-title-push-management">推送管理</h1>
                  <!-- 推送-->
                     <div class="table-container" style="max-height: 500px; overflow-y: auto">
@@ -275,7 +394,7 @@
                             <button id="pushed-next-page" style="margin-left: 10px; padding: 5px 10px;">下一页</button>
                         </div>
                     </div>
-            
+
                     <!-- wbw邮件发送模块 -->
                         <br>
                         <hr>
@@ -299,7 +418,7 @@
 
                                             <form method="post" enctype="multipart/form-data" id="uploadForm" action="upload_excel">
                                                 {% csrf_token %}
-                                                
+
                                                 <div class="mb-4">
                                                     <label class="form-label">{{ form.excel_file.label }}</label>
                                                     <div class="file-input-wrapper">
@@ -340,8 +459,16 @@
                     </div>
             </div>
 
-        <!-- cve安全推送管理 -->
+        <!-- 功能3界面 ：cve安全推送管理 -->
         <div id="secure-content" class="content-section active">
+
+            <!-- 题目 -->
+                <div class="aether-vault">
+                    <h1 class="crystalline-cascade">cve安全漏洞信息</h1>
+                    <div class="lunar-veil">
+                        cve安全漏洞查询、展示、检索平台
+                    </div>
+                </div>
             <!-- CVE搜索功能 -->
             <h1 class="page-title fancy-title fancy-title--push-management" id="unique-title-cve-search">CVE安全漏洞检索</h1>
                 <div class="cve-container">
@@ -349,7 +476,7 @@
                             <h1>CVE漏洞数据库搜索</h1>
                             <p>搜索CVE漏洞信息，可通过cve-id或披露时间范围进行筛选</p>
                         </div>
-                        
+
                         <div id="cve-search-wrapper" class="cve-search-wrapper">
                             <!-- 搜索输入部分 -->
                             <div class="cve-search-section">
@@ -360,7 +487,7 @@
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <!-- 时间选择部分 -->
                             <div class="cve-time-section">
                                 <div class="cve-option-group">
@@ -391,7 +518,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- 使用说明部分 -->
                         <div class="cve-example">
                             <h3>使用说明</h3>
@@ -404,9 +531,9 @@
                                 <li>设置时间范围后点击"应用"按钮生效</li>
                             </ul>
                         </div>
-                        
+
                         <div class="cve-footer">
-                            <p>© 2025 CVE漏洞数据库</p>
+                            <p>© 2025 CVE漏洞数据库 | 苏云邮侠资讯推送系统</p>
                         </div>
                     </div>
             <hr>
@@ -479,7 +606,9 @@
     <script src="{% static 'js/main2.js' %}"></script>
     <script src="{% static 'js/main_wbw.js' %}"></script> 
     <script src="{% static 'js/search.js' %}"></script> 
-    <script src="{% static 'js/new_search.js' %}"></script> 
+    <script src="{% static 'js/new_search.js' %}"></script>
+    <script src="{% static 'js/charts.js' %}"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
 
 
 

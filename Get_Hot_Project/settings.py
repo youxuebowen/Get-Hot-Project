@@ -143,7 +143,48 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
 EMAIL_PORT = 465  # 邮件服务器端口
-EMAIL_HOST_USER = "2215225145@qq.com"  # 邮箱
-EMAIL_HOST_PASSWORD = 'mtmvdhbyshdkdhge'  # 邮箱授权码
+EMAIL_HOST_USER = ""  # 邮箱
+EMAIL_HOST_PASSWORD = ''  # 邮箱授权码
 EMAIL_USE_TLS = False # 与SMTP服务器通信时，是否启动TLS链接(安全链接)。默认是false
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django.log',  # 日志文件路径
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'upload_app': {  # 替换为你的应用名
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',  # 记录更详细的日志
+            'propagate': False,
+        },
+    },
+}
 

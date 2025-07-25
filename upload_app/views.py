@@ -9,14 +9,16 @@ from trio import sleep
 from .forms import ExcelUploadForm
 from openpyxl import load_workbook
 from io import BytesIO
-
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.options import Options
 from typing import List, Dict, Any, Optional, Tuple
 import time
 import base64
 import os
 import pymysql
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseServerError
 from .models import *
 import requests
 import json
@@ -26,7 +28,10 @@ import re  # 正则表达式
 from django.db.models import Q, Sum  # Mysql多条件查询
 import smtplib  # 提供了SMTP客户端会话对象，用于向SMTP服务器发送邮件
 from email.mime.text import MIMEText  # 用于创建文本类型的邮件内容
+import logging
 
+# 获取当前模块的Logger实例
+logger = logging.getLogger(__name__)
 # 配置信息
 TRENDING_API_URL = "https://api.ossinsight.io/q/trending-repos"
 
@@ -783,13 +788,24 @@ def get_articles_description_tag(informations):
     assistant_id = assistant_id_4
 
     for info in informations:
-        a = a + 1
         link = info['url']
         try:
-            # 获取网页内容
-            res = requests.get(link, headers=headers_list, timeout=10)
-            res.raise_for_status()  # 检查请求是否成功
-            soup = BeautifulSoup(res.text, features='html.parser')
+            try:
+                # 记录不同级别的日志
+                logger.debug("这是一条DEBUG日志（调试信息）")
+                # 获取网页内容
+                # 使用 Selenium 获取网页内容
+                # page_source = get_page_content(link)
+                # if page_source is None:
+                #     continue
+                # soup = BeautifulSoup(page_source, features='html.parser')
+                # 获取网页内容
+                res = requests.get(link, headers=headers_list, timeout=10)
+                res.raise_for_status()  # 检查请求是否成功
+                soup = BeautifulSoup(res.text, features='html.parser')
+            except Exception as e:
+                logger.error("发生错误: %s", str(e), exc_info=True)  # 记录异常堆栈
+                return HttpResponseServerError("未爬到具体内容")
 
             # 调用 API
             headers = {
@@ -837,11 +853,29 @@ def get_articles_description_tag(informations):
             print(f"处理链接 {link} 时出错: {e}")
 
         # 限制处理数量（测试用）
-        if a > 4:
-            return articles_tag, articles_description
-
     return articles_tag, articles_description
 
+def get_page_content(url):
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')  # 无头模式，适用于服务器环境
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+
+    # 请根据服务器环境修改 ChromeDriver 的路径
+    service = Service('/path/to/chromedriver')
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    try:
+        driver.get(url)
+        # 等待页面加载完成
+        time.sleep(5)
+        page_source = driver.page_source
+        return page_source
+    except Exception as e:
+        print(f"获取页面内容失败: {e}")
+        return None
+    finally:
+        driver.quit()
 # 数据库更新description
 def update_articles_descriptions(sql_links, articles_tag, articles_descriptions):
     for sql_link, articles_tag, articles_description in zip(sql_links, articles_tag, articles_descriptions):
@@ -1034,3 +1068,306 @@ def fetch_readme_content(repo_name):
         return "README内容不可用"
     except Exception as e:
         return f"获取失败: {str(e)}"
+
+
+# 盒子/图表函数
+def project_tags_api(request):
+    try:
+        # 只查询type为1的文章数据
+        articles = HotProjects.objects.filter(type=1)
+
+        # 标签统计字典
+        tag_counts = {}
+
+        # 定义有效的标签列表 - 确保包含所有需要统计的标签
+        valid_tags = {
+            "后端", "Java", "Go", "Kotlin", "Python", "Node.js", "Swift", "前端",
+            "JavaScript", "TypeScript", "Vue.js", "React.js", "HTML", "CSS", "three.js",
+            "Flutter", "Spring Boot", "Spring", "Android", "Jetpack", "Trae", "Cursor",
+            "MySQL", "数据库", "架构", "Linux", "HarmonyOS", "云原生", "云计算", "算法",
+            "Debug", "逆向", "源码", "开源", "编程语言", "AI编程", "爬虫"
+        }
+
+        # 遍历所有文章
+        for article in articles:
+            # 确保tag字段存在且不为空
+            if article.tag:
+                # 分割标签并去除空格
+                # 处理可能的多种分隔符（逗号、空格等）
+                tags = [tag.strip() for tag in article.tag.replace('，', ',').split(',') if tag.strip()]
+
+                # 统计每个有效标签
+                for tag in tags:
+                    # 转换为小写进行匹配，确保大小写不敏感
+                    lower_tag = tag.lower()
+                    # 查找有效的标签（不区分大小写）
+                    matched_tag = next((t for t in valid_tags if t.lower() == lower_tag), None)
+                    if matched_tag:
+                        tag_counts[matched_tag] = tag_counts.get(matched_tag, 0) + 1
+                    else:
+                        # 对于不在valid_tags中的标签，也进行统计，方便调试
+                        print(f"未匹配的标签: {tag}")
+
+        # 转换为列表并按数量排序
+        tag_list = [{'name': tag, 'value': count} for tag, count in tag_counts.items()]
+        tag_list.sort(key=lambda x: x['value'], reverse=True)
+
+        # 返回结果
+        return JsonResponse({'tags': tag_list})
+    except Exception as e:
+        print(f"project标签统计API错误: {str(e)}")
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def article_tags_api(request):
+    try:
+        # 只查询type为2的文章数据
+        articles = HotProjects.objects.filter(type=2)
+
+        # 标签统计字典
+        tag_counts = {}
+
+        # 定义有效的标签列表 - 确保包含所有需要统计的标签
+        valid_tags = {
+            "后端", "Java", "Go", "Kotlin", "Python", "Node.js", "Swift", "前端",
+            "JavaScript", "TypeScript", "Vue.js", "React.js", "HTML", "CSS", "three.js",
+            "Flutter", "Spring Boot", "Spring", "Android", "Jetpack", "Trae", "Cursor",
+            "MySQL", "数据库", "架构", "Linux", "HarmonyOS", "云原生", "云计算", "算法",
+            "Debug", "逆向", "源码", "开源", "编程语言", "AI编程", "爬虫"
+        }
+
+        # 遍历所有文章
+        for article in articles:
+            # 确保tag字段存在且不为空
+            if article.tag:
+                # 分割标签并去除空格
+                # 处理可能的多种分隔符（逗号、空格等）
+                tags = [tag.strip() for tag in article.tag.replace('，', ',').split(',') if tag.strip()]
+
+                # 统计每个有效标签
+                for tag in tags:
+                    # 转换为小写进行匹配，确保大小写不敏感
+                    lower_tag = tag.lower()
+                    # 查找有效的标签（不区分大小写）
+                    matched_tag = next((t for t in valid_tags if t.lower() == lower_tag), None)
+                    if matched_tag:
+                        tag_counts[matched_tag] = tag_counts.get(matched_tag, 0) + 1
+                    else:
+                        # 对于不在valid_tags中的标签，也进行统计，方便调试
+                        print(f"未匹配的标签: {tag}")
+
+        # 转换为列表并按数量排序
+        tag_list = [{'name': tag, 'value': count} for tag, count in tag_counts.items()]
+        tag_list.sort(key=lambda x: x['value'], reverse=True)
+
+        # 返回结果
+        return JsonResponse({'tags': tag_list})
+    except Exception as e:
+        print(f"标签统计API错误: {str(e)}")
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def stats_data_api(request):
+    try:
+        # 获取今日和昨日的日期
+        today = datetime.now().date()
+        yesterday = today - timedelta(days=1)
+        first_day_of_month = today.replace(day=1)
+
+        # 从HotProjects获取数据
+        # hotArticlesTotal: type为2的文章个数
+        hot_articles_total = HotProjects.objects.filter(type=2).count()
+
+        # hotProjectsTotal: type为1的文章条目总个数
+        hot_projects_total = HotProjects.objects.filter(type=1).count()
+
+        # pushedTotal: if_sent字段为1的所有文章个数
+        pushed_total = HotProjects.objects.filter(if_sent=1).count()
+
+        # toPushTotal: if_sent字段为0且if_chosen字段为1的所有文章个数
+        to_push_total = HotProjects.objects.filter(if_sent=0, if_chosen=1).count()
+
+        # 从CveSpider获取数据
+        # vulnerabilitiesTotal: 数据库总条目个数
+        vulnerabilities_total = CveSpider.objects.count()
+
+        # yesterdayVulns: 今日新增的条目个数
+        today_cve = CveSpider.objects.filter(created_time__date=today).count()
+
+        # 计算hotArticlesChange
+        today_articles = HotProjects.objects.filter(type=2, created_time__date=today).count()
+        yesterday_articles = HotProjects.objects.filter(type=2, created_time__date=yesterday).count()
+
+        if yesterday_articles == 0:
+            hot_articles_change = "较昨日 ↑ 100%" if today_articles > 0 else "较昨日不变"
+        else:
+            rate = ((today_articles - yesterday_articles) / yesterday_articles) * 100
+            if rate > 0:
+                hot_articles_change = f"较昨日 ↑ {rate:.1f}%"
+            elif rate < 0:
+                hot_articles_change = f"较昨日 ↓ {abs(rate):.1f}%"
+            else:
+                hot_articles_change = "较昨日不变"
+
+        # 计算hotProjectsChange
+        today_projects = HotProjects.objects.filter(type=1, created_time__date=today).count()
+        yesterday_projects = HotProjects.objects.filter(type=1, created_time__date=yesterday).count()
+
+        if yesterday_projects == 0:
+            hot_projects_change = "较昨日 ↑ 100%" if today_projects > 0 else "较昨日不变"
+        else:
+            rate = ((today_projects - yesterday_projects) / yesterday_projects) * 100
+            if rate > 0:
+                hot_projects_change = f"较昨日 ↑ {rate:.1f}%"
+            elif rate < 0:
+                hot_projects_change = f"较昨日 ↓ {abs(rate):.1f}%"
+            else:
+                hot_projects_change = "较昨日不变"
+
+        # 计算pushedChange
+        total_articles = HotProjects.objects.count()
+        if total_articles == 0:
+            pushed_change = "已发布占比0%"
+        else:
+            pushed_ratio = (pushed_total / total_articles) * 100
+            pushed_change = f"已发布占比{pushed_ratio:.0f}%"
+
+        # 计算toPushChange
+        today_new = HotProjects.objects.filter(created_time__date=today).count()
+        if today_new == 0:
+            to_push_change = "今日已推送率0%"
+        else:
+            today_pushed = HotProjects.objects.filter(created_time__date=today, if_sent=1).count()
+            to_push_ratio = (today_pushed / today_new) * 100
+            to_push_change = f"今日已推送率{to_push_ratio:.0f}%"
+
+        # 计算vulnerabilitiesChange
+        month_cve = CveSpider.objects.filter(created_time__date__gte=first_day_of_month).count()
+        vulnerabilities_change = f"本月新增{month_cve}个"
+
+        # 计算yesterdayVulnsChange
+        yesterday_cve = CveSpider.objects.filter(created_time__date=yesterday).count()
+
+        if yesterday_cve == 0:
+            yesterday_vulns_change = "较昨日 ↑ 100%" if today_cve > 0 else "较昨日不变"
+        else:
+            rate = ((today_cve - yesterday_cve) / yesterday_cve) * 100
+            if rate > 0:
+                yesterday_vulns_change = f"较昨日 ↑ {rate:.1f}%"
+            elif rate < 0:
+                yesterday_vulns_change = f"较昨日 ↓ {abs(rate):.1f}%"
+            else:
+                yesterday_vulns_change = "较昨日不变"
+
+        # 格式化数字，添加千位分隔符
+        def format_number(num):
+            return f"{num:,}"
+
+        # 构建响应数据
+        data = {
+            'hotArticlesTotal': format_number(hot_articles_total),
+            'hotProjectsTotal': format_number(hot_projects_total),
+            'pushedTotal': format_number(pushed_total),
+            'toPushTotal': format_number(to_push_total),
+            'vulnerabilitiesTotal': format_number(vulnerabilities_total),
+            'yesterdayVulns': format_number(today_cve),
+            'hotArticlesChange': hot_articles_change,
+            'hotProjectsChange': hot_projects_change,
+            'pushedChange': pushed_change,
+            'toPushChange': to_push_change,
+            'vulnerabilitiesChange': vulnerabilities_change,
+            'yesterdayVulnsChange': yesterday_vulns_change
+        }
+
+        return JsonResponse(data)
+    except Exception as e:
+        print(f"统计API错误: {str(e)}")
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+# 趋势数据API
+from datetime import datetime, timedelta
+
+
+def trend_data_api(request):
+    try:
+        # 获取当前日期
+        today = datetime.now()
+        weeks = []
+        articles_data = []
+        projects_data = []
+        vulnerabilities_data = []
+
+        # 生成8个旬期的日期范围和标签
+        for i in range(7, -1, -1):
+            # 计算当前旬的开始和结束日期
+            current_date = today - timedelta(days=i * 10)
+            month = current_date.month
+            day = current_date.day
+
+            # 确定旬期
+            if day <= 10:
+                ten_day_period = f'{month}月上旬'
+                start_day = 1
+                end_day = 10
+            elif day <= 20:
+                ten_day_period = f'{month}月中旬'
+                start_day = 11
+                end_day = 20
+            else:
+                ten_day_period = f'{month}月下旬'
+                start_day = 21
+                # 获取当月最后一天
+                if month in [4, 6, 9, 11]:
+                    end_day = 30
+                elif month == 2:
+                    # 简单判断闰年
+                    if current_date.year % 4 == 0 and (current_date.year % 100 != 0 or current_date.year % 400 == 0):
+                        end_day = 29
+                    else:
+                        end_day = 28
+                else:
+                    end_day = 31
+
+            # 计算当前旬的开始和结束日期
+            start_date = datetime(current_date.year, month, start_day, 0, 0, 0)
+            end_date = datetime(current_date.year, month, end_day, 23, 59, 59)
+
+            # 添加旬期标签
+            weeks.append(ten_day_period)
+
+            # 查询文章数据 (type=2)
+            articles_count = HotProjects.objects.filter(
+                type=2,
+                created_time__gte=start_date,
+                created_time__lte=end_date
+            ).count()
+            articles_data.append(articles_count)
+
+            # 查询项目数据 (type=1)
+            projects_count = HotProjects.objects.filter(
+                type=1,
+                created_time__gte=start_date,
+                created_time__lte=end_date
+            ).count()
+            projects_data.append(projects_count)
+
+            # 查询漏洞数据
+            vulnerabilities_count = CveSpider.objects.filter(
+                created_time__gte=start_date,
+                created_time__lte=end_date
+            ).count()
+            vulnerabilities_data.append(vulnerabilities_count)
+
+        # 构建响应数据
+        data = {
+            'weeks': weeks,
+            'articles': articles_data,
+            'projects': projects_data,
+            'vulnerabilities': vulnerabilities_data
+        }
+
+        return JsonResponse(data)
+    except Exception as e:
+        print(f"趋势数据API错误: {str(e)}")
+        return JsonResponse({'error': str(e)}, status=500)

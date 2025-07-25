@@ -28,4 +28,9 @@ urlpatterns = [
     path('api/v1/update-chosen/', views.update_chosen_api, name='update_chosen_api'),
     path('api/v1/get-chosen-content/', views.get_chosen_content_api, name='get_chosen_content_api'),
     # path('api/v1/cve_info_list', views.cve_info_list, name='cve_info_list'),
+    # 盒子图表路径
+    path('api/v1/article-tags/', views.article_tags_api, name='article-tags-api'),
+    path('api/v1/project-tags/', views.project_tags_api, name='project-tags-api'),
+    path('api/v1/stats-data/', views.stats_data_api, name='stats-data-api'),
+    path('api/v1/trend-data/', views.trend_data_api, name='trend-data-api'),
 ]
