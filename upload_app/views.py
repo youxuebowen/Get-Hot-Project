@@ -22,7 +22,8 @@ from django.http import HttpResponse, JsonResponse, HttpResponseServerError
 from .models import *
 import requests
 import json
-from datetime import datetime, timedelta, timezone  # 日期格式处理
+from datetime import datetime, timedelta
+# from datetime import datetime, timedelta, timezone  # 日期格式处理
 from bs4 import BeautifulSoup  # 爬取内容处理
 import re  # 正则表达式
 from django.db.models import Q, Sum  # Mysql多条件查询
@@ -163,101 +164,107 @@ def upload_excel(request):
 
 
 def content_table_api(request):
-    try:
-        # 获取查询参数并设置默认值
-        page = max(int(request.GET.get('page', 1)), 1)  # 确保至少为1
-        page_size = min(max(int(request.GET.get('page_size', 10)), 1), 100)  # 限制10-100条/页
-        search = request.GET.get('search', '').strip()
-        tag = request.GET.get('tag', '').strip()
-        from_date = request.GET.get('from_date', '').strip()
-        to_date = request.GET.get('to_date', '').strip()
-        content = request.GET.get('content', '').strip()
-        type_value = request.GET.get('type', '').strip()
-
-        # 使用select_related/prefetch_related优化关联查询（如果有外键）
-        queryset = HotProjects.objects.all().order_by('-updated_time')
-
-        # 应用搜索过滤
-        if search:
-            queryset = queryset.filter(
-                Q(name__icontains=search) |
-                Q(tag__icontains=search) |
-                Q(description__icontains=search)
-            )
-
-        # 应用内容过滤
-        if content:
-            queryset = queryset.filter(
-                Q(content__icontains=content) |
-                Q(name__icontains=content)
-            )
-
-        # 应用标签过滤（支持多标签，使用OR连接）
-        if tag:
-            tag_list = [t.strip() for t in tag.split(',') if t.strip()]
-            if tag_list:
-                tag_query = Q()
-                for t in tag_list:
-                    tag_query |= Q(tag__icontains=t)
-                queryset = queryset.filter(tag_query)
-
-        # 应用类型过滤
-        if type_value and type_value.isdigit():
-            queryset = queryset.filter(type=int(type_value))
-
-        # 应用时间范围过滤
         try:
-            if from_date:
-                # 将字符串日期转换为datetime对象
-                from_datetime = datetime.datetime.strptime(from_date, '%Y-%m-%d')
-                queryset = queryset.filter(created_time__gte=from_datetime)
+            # 获取查询参数并设置默认值
+            page = max(int(request.GET.get('page', 1)), 1)  # 确保至少为1
+            page_size = min(max(int(request.GET.get('page_size', 10)), 1), 100)  # 限制10-100条/页
+            search = request.GET.get('search', '').strip()
+            tag = request.GET.get('tag', '').strip()
+            from_date = request.GET.get('from_date', '').strip()
+            to_date = request.GET.get('to_date', '').strip()
+            content = request.GET.get('content', '').strip()
+            type_value = request.GET.get('type', '').strip()
 
-            if to_date:
-                # 将字符串日期转换为datetime对象，并设置为当天结束时间
-                to_datetime = datetime.datetime.strptime(to_date, '%Y-%m-%d')
-                to_datetime = to_datetime.replace(hour=23, minute=59, second=59)
-                queryset = queryset.filter(created_time__lte=to_datetime)
-        except ValueError as e:
-            # 日期格式错误
-            return JsonResponse({'error': f'日期格式错误: {str(e)}'}, status=400)
+            # 使用select_related/prefetch_related优化关联查询（如果有外键）
+            queryset = HotProjects.objects.all().order_by('-updated_time')
 
-        # 性能关键：避免在分页前执行count()
-        # 使用Paginator的懒加载特性
-        paginator = Paginator(queryset, page_size)
+            # 应用搜索过滤
+            if search:
+                queryset = queryset.filter(
+                    Q(name__icontains=search) |
+                    Q(tag__icontains=search) |
+                    Q(description__icontains=search)
+                )
 
-        try:
-            current_page = paginator.page(page)
-        except EmptyPage:
-            # 超出范围时返回最后一页
-            current_page = paginator.page(paginator.num_pages)
+            # 应用内容过滤
+            if content:
+                queryset = queryset.filter(
+                    Q(content__icontains=content) |
+                    Q(name__icontains=content)
+                )
 
-        # 构建响应数据 - 使用values()优化序列化
-        results = list(current_page.object_list.values(
-            'id', 'name', 'description', 'url',
-            'tag', 'type', 'if_sent', 'updated_time'
-        ))
+            # 应用标签过滤（支持多标签，使用OR连接）
+            if tag:
+                tag_list = [t.strip() for t in tag.split(',') if t.strip()]
+                if tag_list:
+                    tag_query = Q()
+                    for t in tag_list:
+                        tag_query |= Q(tag__icontains=t)
+                    queryset = queryset.filter(tag_query)
 
-        # 转换字段格式
-        for item in results:
-            item['status'] = '已经推送' if item['if_sent'] else '未被推送'
-            item['updated_time'] = item['updated_time'].isoformat() if item['updated_time'] else None
-            del item['if_sent']  # 移除原始字段
+            # 应用类型过滤
+            if type_value and type_value.isdigit():
+                queryset = queryset.filter(type=int(type_value))
 
-        data = {
-            'count': paginator.count,
-            'next': current_page.next_page_number() if current_page.has_next() else None,
-            'previous': current_page.previous_page_number() if current_page.has_previous() else None,
-            'total_pages': paginator.num_pages,
-            'current_page': current_page.number,
-            'results': results
-        }
+            # 应用时间范围过滤
+            try:
+                if from_date:
+                    # 将字符串日期转换为datetime对象
+                    from_datetime = datetime.strptime(from_date, '%Y-%m-%d')
+                    queryset = queryset.filter(created_time__gte=from_datetime)
 
-        return JsonResponse(data)
+                if to_date:
+                    # 将字符串日期转换为datetime对象，并设置为当天结束时间
+                    to_datetime = datetime.strptime(to_date, '%Y-%m-%d')
+                    to_datetime = to_datetime.replace(hour=23, minute=59, second=59)
+                    queryset = queryset.filter(created_time__lte=to_datetime)
+            except ValueError as e:
+                # 日期格式错误
+                return JsonResponse({'error': f'日期格式错误: {str(e)}'}, status=400)
 
-    except Exception as e:
-        # 使用正式日志系统替代print
-        # logger.error(f"API错误: {str(e)}", exc_info=True)
-        return JsonResponse({'error': f'服务器内部错误: {str(e)}'}, status=500)
+            # 性能关键：避免在分页前执行count()
+            # 使用Paginator的懒加载特性
+            paginator = Paginator(queryset, page_size)
+
+            try:
+                current_page = paginator.page(page)
+            except EmptyPage:
+                # 超出范围时返回最后一页
+                current_page = paginator.page(paginator.num_pages)
+
+            # 构建响应数据 - 使用values()优化序列化
+            results = list(current_page.object_list.values(
+                'id', 'name', 'description', 'url',
+                'tag', 'type', 'if_sent', 'updated_time'
+            ))
+
+            # 转换字段格式
+            for item in results:
+                item['status'] = '已经推送' if item['if_sent'] else '未被推送'
+                item['updated_time'] = item['updated_time'].isoformat() if item['updated_time'] else None
+                del item['if_sent']  # 移除原始字段
+
+            data = {
+                'count': paginator.count,
+                'next': current_page.next_page_number() if current_page.has_next() else None,
+                'previous': current_page.previous_page_number() if current_page.has_previous() else None,
+                'total_pages': paginator.num_pages,
+                'current_page': current_page.number,
+                'results': results
+            }
+
+            return JsonResponse(data)
+
+        except Exception as e:
+            # 添加详细错误日志
+            import traceback
+            error_details = {
+                'error_type': type(e).__name__,
+                'error_message': str(e),
+                'traceback': traceback.format_exc()
+            }
+            print(f"API错误详情: {error_details}")
+            return JsonResponse({'error': f'服务器内部错误: {str(e)}', 'details': error_details}, status=500)
 
 
 def update_chosen_api(request):
@@ -855,27 +862,27 @@ def get_articles_description_tag(informations):
         # 限制处理数量（测试用）
     return articles_tag, articles_description
 
-def get_page_content(url):
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')  # 无头模式，适用于服务器环境
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-
-    # 请根据服务器环境修改 ChromeDriver 的路径
-    service = Service('/path/to/chromedriver')
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-
-    try:
-        driver.get(url)
-        # 等待页面加载完成
-        time.sleep(5)
-        page_source = driver.page_source
-        return page_source
-    except Exception as e:
-        print(f"获取页面内容失败: {e}")
-        return None
-    finally:
-        driver.quit()
+# def get_page_content(url):
+#     chrome_options = Options()
+#     chrome_options.add_argument('--headless')  # 无头模式，适用于服务器环境
+#     chrome_options.add_argument('--no-sandbox')
+#     chrome_options.add_argument('--disable-dev-shm-usage')
+#
+#     # 请根据服务器环境修改 ChromeDriver 的路径
+#     service = Service('/path/to/chromedriver')
+#     driver = webdriver.Chrome(service=service, options=chrome_options)
+#
+#     try:
+#         driver.get(url)
+#         # 等待页面加载完成
+#         time.sleep(5)
+#         page_source = driver.page_source
+#         return page_source
+#     except Exception as e:
+#         print(f"获取页面内容失败: {e}")
+#         return None
+#     finally:
+#         driver.quit()
 # 数据库更新description
 def update_articles_descriptions(sql_links, articles_tag, articles_descriptions):
     for sql_link, articles_tag, articles_description in zip(sql_links, articles_tag, articles_descriptions):
@@ -1286,7 +1293,6 @@ def stats_data_api(request):
 
 
 # 趋势数据API
-from datetime import datetime, timedelta
 
 
 def trend_data_api(request):
