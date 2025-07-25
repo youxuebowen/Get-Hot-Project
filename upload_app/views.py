@@ -1,4 +1,5 @@
 import os
+import random
 
 from django.core.paginator import EmptyPage, Paginator
 from django.db import transaction
@@ -403,7 +404,7 @@ def get_article_descriptions(request):
 # 获取github的url链接并存储到数据库
 def github_url(request):
     period = request.GET.get('period', 'past_week')
-    data_count = request.GET.get('data_count', 5)  # 每次爬50条
+    data_count = request.GET.get('data_count', 20)  # 每次爬50条
     language = request.GET.get('language', 'Python')
 
     # 限制爬取的条数在0-100
@@ -416,6 +417,8 @@ def github_url(request):
         # params = {'period': period, 'data_count': data_count}
         # response = requests.get(TRENDING_API_URL, params = params, headers={'user-agent': USER_AGENT})
         max_retries = 3
+        languagelist = ['Java','C','C++', 'HTML', 'R', 'JavaScript', 'Fortran']
+        language = random.choice(languagelist)
         response = requests.get(
             TRENDING_API_URL,
             headers={'User-Agent': USER_AGENT},
@@ -464,8 +467,8 @@ def github_url(request):
 
 # 获取数据库中content为空的url，调用fetch_readme_content去爬取，根据返回内容存入数据库
 def save_github_readme(request):
-    # 改了name
-    github_repo_name = HotProjects.objects.filter(content="").values('name')
+    # 改了name,必须是github的url,限制每次更新四条数据
+    github_repo_name = HotProjects.objects.filter(content="",type=1).values('name')[:3]
     return_data = []
     for repo_name in github_repo_name:
         # repo_name = request.GET.get('repo_name')
