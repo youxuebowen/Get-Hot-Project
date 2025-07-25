@@ -744,7 +744,7 @@ def insert_articles(articles):
 def read_articles_sql():
     results = []
     # 使用 ORM 查询 description 字段为空的记录，限制为三个防止爬取不回来
-    limit_count = 3
+    limit_count = 1
     articles = HotProjects.objects.filter(description='').values('id', 'url', 'name', 'type', 'if_sent')[:limit_count]
     # 转换为字典格式
     for row in articles:
