@@ -9,9 +9,9 @@ from trio import sleep
 from .forms import ExcelUploadForm
 from openpyxl import load_workbook
 from io import BytesIO
-# from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
-# from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from typing import List, Dict, Any, Optional, Tuple
 import time
 import base64
@@ -775,7 +775,7 @@ def read_articles_sql():
 def get_articles_description_tag(informations):
     articles_description = []
     articles_tag = []
-    a = 1
+    # a = 1
     headers_list = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         "Referer": "https://juejin.cn/",
@@ -802,14 +802,14 @@ def get_articles_description_tag(informations):
                 logger.debug("这是一条DEBUG日志（调试信息）")
                 # 获取网页内容
                 # 使用 Selenium 获取网页内容
-                # page_source = get_page_content(link)
-                # if page_source is None:
-                #     continue
-                # soup = BeautifulSoup(page_source, features='html.parser')
+                page_source = get_page_content(link)
+                if page_source is None:
+                    continue
+                soup = BeautifulSoup(page_source, features='html.parser')
                 # 获取网页内容
-                res = requests.get(link, headers=headers_list, timeout=10)
-                res.raise_for_status()  # 检查请求是否成功
-                soup = BeautifulSoup(res.text, features='html.parser')
+                # res = requests.get(link, headers=headers_list, timeout=10)
+                # res.raise_for_status()  # 检查请求是否成功
+                # soup = BeautifulSoup(res.text, features='html.parser')
             except Exception as e:
                 logger.error("发生错误: %s", str(e), exc_info=True)  # 记录异常堆栈
                 return HttpResponseServerError("未爬到具体内容")
@@ -862,27 +862,27 @@ def get_articles_description_tag(informations):
         # 限制处理数量（测试用）
     return articles_tag, articles_description
 
-# def get_page_content(url):
-#     chrome_options = Options()
-#     chrome_options.add_argument('--headless')  # 无头模式，适用于服务器环境
-#     chrome_options.add_argument('--no-sandbox')
-#     chrome_options.add_argument('--disable-dev-shm-usage')
-#
-#     # 请根据服务器环境修改 ChromeDriver 的路径
-#     service = Service('/path/to/chromedriver')
-#     driver = webdriver.Chrome(service=service, options=chrome_options)
-#
-#     try:
-#         driver.get(url)
-#         # 等待页面加载完成
-#         time.sleep(5)
-#         page_source = driver.page_source
-#         return page_source
-#     except Exception as e:
-#         print(f"获取页面内容失败: {e}")
-#         return None
-#     finally:
-#         driver.quit()
+def get_page_content(url):
+    chrome_options = Options()
+    # chrome_options.add_argument('--headless')  # 无头模式，适用于服务器环境
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+
+    # 请根据服务器环境修改 ChromeDriver 的路径
+    service = Service('templates/upload_app/chromedriver.exe')
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    try:
+        driver.get(url)
+        # 等待页面加载完成
+        time.sleep(5)
+        page_source = driver.page_source
+        return page_source
+    except Exception as e:
+        print(f"获取页面内容失败: {e}")
+        return None
+    finally:
+        driver.quit()
 # 数据库更新description
 def update_articles_descriptions(sql_links, articles_tag, articles_descriptions):
     for sql_link, articles_tag, articles_description in zip(sql_links, articles_tag, articles_descriptions):
