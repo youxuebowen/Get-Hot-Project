@@ -20,12 +20,13 @@ from django.http import HttpResponse, JsonResponse
 from .models import *
 import requests
 import json
-from datetime import datetime,timedelta,timezone #日期格式处理
-from bs4 import BeautifulSoup #爬取内容处理
-import re #正则表达式
-from django.db.models import Q, Sum #Mysql多条件查询
+from datetime import datetime, timedelta, timezone  # 日期格式处理
+from bs4 import BeautifulSoup  # 爬取内容处理
+import re  # 正则表达式
+from django.db.models import Q, Sum  # Mysql多条件查询
 import smtplib  # 提供了SMTP客户端会话对象，用于向SMTP服务器发送邮件
 from email.mime.text import MIMEText  # 用于创建文本类型的邮件内容
+
 # 配置信息
 TRENDING_API_URL = "https://api.ossinsight.io/q/trending-repos"
 
@@ -36,6 +37,7 @@ GITHUB_TOKEN = None
 
 def index(request):
     return render(request, 'index.html')
+
 
 # def upload_excel(request):
 #     # 上传Excel文件，包含用户的邮箱和校验码
@@ -153,6 +155,8 @@ def upload_excel(request):
         form = ExcelUploadForm()
 
     return render(request, 'index.html', {'form': form})
+
+
 def content_table_api(request):
     try:
         # 获取查询参数并设置默认值
@@ -250,6 +254,7 @@ def content_table_api(request):
         # logger.error(f"API错误: {str(e)}", exc_info=True)
         return JsonResponse({'error': f'服务器内部错误: {str(e)}'}, status=500)
 
+
 def update_chosen_api(request):
     if request.method == 'POST':
         try:
@@ -271,6 +276,7 @@ def update_chosen_api(request):
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     else:
         return JsonResponse({'success': False, 'error': '不支持的请求方法'}, status=405)
+
 
 def get_chosen_content_api(request):
     try:
@@ -307,11 +313,15 @@ def get_chosen_content_api(request):
         print(f"获取已选内容错误: {str(e)}")
         return JsonResponse({'error': str(e)}, status=500)
 
+
 def fail(request):
     return render(request, 'fail.html')
 
+
 def success(request):
     return render(request, 'success.html')
+
+
 # def query_hot_projects(request, self=None):
 #     if request.method == 'GET':
 #         content = request.GET.get('content')
@@ -368,17 +378,20 @@ def get_article_url(request):
     else:
         return JsonResponse({"message": "插入失败"}, json_dumps_params={'ensure_ascii': False})
 
+
 def get_article_descriptions(request):
     # 更新description和tag
     sql_links = read_articles_sql()  # 获取description为空的记录,且type=2是掘金类型
     articles_tag, articles_description = get_articles_description_tag(sql_links)  # 获取这些记录的 description
     update_articles_descriptions(sql_links, articles_tag, articles_description)  # 更新对应记录
-    return JsonResponse({"message": f"成功更新 {len(articles_description)} 条文章描述及标签"}, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse({"message": f"成功更新 {len(articles_description)} 条文章描述及标签"},
+                        json_dumps_params={'ensure_ascii': False})
+
 
 # 获取github的url链接并存储到数据库
 def github_url(request):
     period = request.GET.get('period', 'past_week')
-    data_count = request.GET.get('data_count', 5) #每次爬50条
+    data_count = request.GET.get('data_count', 5)  # 每次爬50条
     language = request.GET.get('language', 'Python')
 
     # 限制爬取的条数在0-100
@@ -394,7 +407,7 @@ def github_url(request):
         response = requests.get(
             TRENDING_API_URL,
             headers={'User-Agent': USER_AGENT},
-            params={'period': period, 'data_count': data_count, 'language':language}  # 显式传递参数
+            params={'period': period, 'data_count': data_count, 'language': language}  # 显式传递参数
         )
         for attempt in range(max_retries):
             if response.status_code == 200:
@@ -409,7 +422,6 @@ def github_url(request):
         for item in data.get('data', [])[:data_count]:
             repo_name = item['repo_name']
             repo_url = f"https://github.com/{repo_name}"
-
 
             """
             数据库查询部分，查询该项目是否已经存在，若不存在（重复数量为0），则进行插入
@@ -437,6 +449,7 @@ def github_url(request):
     except Exception as e:
         return JsonResponse({"code": 500, "message": str(e)})
 
+
 # 获取数据库中content为空的url，调用fetch_readme_content去爬取，根据返回内容存入数据库
 def save_github_readme(request):
     # 改了name
@@ -452,7 +465,7 @@ def save_github_readme(request):
             """爬取数据跟新，插入readme的content、tag、description字段"""
             """start"""
             HotProjects.objects.filter(name=repo_name['name']).update(content=content, description=tag[1], tag=tag[0],
-                                                               updated_time = datetime.now())
+                                                                      updated_time=datetime.now())
             """end"""
 
             return_data.append([content, tag])
@@ -462,9 +475,12 @@ def save_github_readme(request):
 
     return return_data
 
+
 """
 获取漏洞信息
 """
+
+
 def cve_email_send(request):
     now = datetime.now().date()
     cve_id_list = CveSpider.objects.filter(created_time__gte=now).values("cve_id")
@@ -532,6 +548,7 @@ def cve_email_send(request):
 
     return JsonResponse({"code": 200, "message": "Successful"})
 
+
 def cve_info_list(request):
     if request.GET.get('cveId') == None or request.GET.get('pageFrom') == None or request.GET.get(
             'pageSize') == None or request.GET.get('dateFrom') == None or request.GET.get('dateTo') == None:
@@ -586,6 +603,7 @@ def cve_info_list(request):
     else:
         return JsonResponse({"code": 500, "message": "Internal Error"})
 
+
 def cve_num_list(request):
     now = datetime.now().date()
     yesterday = now - timedelta(days=1)
@@ -594,7 +612,8 @@ def cve_num_list(request):
 
     cve_total_num = CveSpider.objects.count()
     cve_yesterday_num = CveSpider.objects.filter(created_time__gte=yesterday, created_time__lte=now).count()
-    return JsonResponse({"code": 200, "message": "Successful","data": {"cve_total_num": cve_total_num, "cve_yesterday_num": cve_yesterday_num}})
+    return JsonResponse({"code": 200, "message": "Successful",
+                         "data": {"cve_total_num": cve_total_num, "cve_yesterday_num": cve_yesterday_num}})
 
 
 # 定义发送邮件的函数
@@ -634,19 +653,21 @@ def send_welcome_email(usernames, Emails, verification_codes):
             return False
     return True
 
+
 # 更新数据库，清空待发送列表，状态改为已发送
 def update_database():
-
     HotProjects.objects.filter(if_chosen=1).update(if_chosen=0, if_sent=1)
     return True
+
 
 # 获取数据库中的待发送项目,if_chosen=1
 def get_hot_projects():
     # 使用 filter 方法筛选 if_send 为 1 的记录，并只获取 name 和 字段description
-    projects = HotProjects.objects.filter(if_chosen=1).values('name', 'description','url')
+    projects = HotProjects.objects.filter(if_chosen=1).values('name', 'description', 'url')
     return projects
 
-#获取文章列表信息，返回列表/字典/
+
+# 获取文章列表信息，返回列表/字典/
 def get_artical_link():
     url_artical_link = "https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot"
 
@@ -666,8 +687,9 @@ def get_artical_link():
             print(f"API返回错误: {data.get('err_msg', '未知错误')}")
             return []
 
-        articles = data["data"][:50]
-
+        # articles = data["data"][:50]
+        # 每次爬取二十个url
+        articles = data["data"][:20]
         results = []
         for article in articles:
             # 确保content字段存在
@@ -721,8 +743,9 @@ def insert_articles(articles):
 # 获取description为空的记录,且type=2是掘金类型
 def read_articles_sql():
     results = []
-    # 使用 ORM 查询 description 字段为空的记录
-    articles = HotProjects.objects.filter(description='').values('id', 'url', 'name', 'type', 'if_sent')
+    # 使用 ORM 查询 description 字段为空的记录，限制为三个防止爬取不回来
+    limit_count = 3
+    articles = HotProjects.objects.filter(description='').values('id', 'url', 'name', 'type', 'if_sent')[:limit_count]
     # 转换为字典格式
     for row in articles:
         results.append({
@@ -954,9 +977,6 @@ process_repositories：处理仓库搜索和 README 提取流程，可选择将�
 """
 
 
-
-
-
 # 自定义JsonResponse
 # class JsonResponse(HttpResponse):
 #     def __init__(self, data, **kwargs):
@@ -1014,4 +1034,3 @@ def fetch_readme_content(repo_name):
         return "README内容不可用"
     except Exception as e:
         return f"获取失败: {str(e)}"
-
