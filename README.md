@@ -1,37 +1,3 @@
-# HotTechCapture
-
-#### 介绍
-
-#### 软件架构
-软件架构说明
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 # ReadMe
 
 Python 3.9.20, Django 4.2.23
@@ -124,6 +90,6 @@ MySQL 8.0.42
 
 **其他：**
 
-每个后端接口设计好后，先完成接口文档编写，再开始接口开发；负责前端的同学，请了解清楚涉及前后端交互的接口，可以在后端同学接口还没有开发完成前，使用https://apifox.com/apiskills/mock-api/ 工具来模拟后端接口，同步开始前端开发；
+1.每个后端接口设计好后，先完成接口文档编写，再开始接口开发；负责前端的同学，请了解清楚涉及前后端交互的接口，可以在后端同学接口还没有开发完成前，使用https://apifox.com/apiskills/mock-api/ 工具来模拟后端接口，同步开始前端开发；
 
-关于同学们缺少python、js、css相关基础的问题，可以试着研究一下Trae编程工具 https://www.trae.cn/ 。网上也有相关的教材，借助AI编程工具降低代码开发难度，提升效率。代码编写过程中有不会实现的也可以百度或者求助大模型。
+​            2.     关于同学们缺少python、js、css相关基础的问题，可以试着研究一下Trae编程工具 https://www.trae.cn/ 。网上也有相关的教材，借助AI编程工具降低代码开发难度，提升效率。代码编写过程中有不会实现的也可以百度或者求助大模型。

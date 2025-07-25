@@ -26,8 +26,8 @@ SECRET_KEY = "django-insecure-tl55p^l&j1ctfbz^#dx0(evbz*+*_sh_^dj6a7kiwa@%6(9s&c
 # 上线之后改为false，ALLOWED_HOSTS也需要改
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = ['139.224.114.224', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 # 注册子应用
@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sky_take_out',        # 数据库名称
         'USER': 'root',       # 数据库用户名
-        'PASSWORD': '123456', # 数据库密码
+        'PASSWORD': '@Get123456', # 数据库密码
         'HOST': 'localhost',        # 数据库服务器地址
         'PORT': '3306',             # 数据库端口(默认3306)
         'OPTIONS': {
