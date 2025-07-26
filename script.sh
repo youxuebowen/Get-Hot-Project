@@ -1,6 +1,6 @@
 #!/bin/bash
-
-#进入虚拟环境
+# 这个无所谓，直接curl就行）
+source /root/miniconda3/etc/profile.d/conda.sh
 conda activate GetHotProjects
 # 进入项目目录
 cd hot-tech-capture

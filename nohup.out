@@ -1,1 +1,829 @@
 INFO Watching for file changes with StatReloader
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/main.css HTTP/1.1" 304 0
+INFO "GET /static/css/search.css HTTP/1.1" 304 0
+INFO "GET /static/css/new_search.css HTTP/1.1" 304 0
+INFO "GET /static/css/charts.css HTTP/1.1" 304 0
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/js/main2.js HTTP/1.1" 304 0
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 304 0
+INFO "GET /static/js/search.js HTTP/1.1" 304 0
+INFO "GET /static/js/charts.js HTTP/1.1" 304 0
+INFO "GET /static/js/new_search.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 59
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-20 23:59:59) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 96
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-31 23:59:59) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 480
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-31 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-30 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-30 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-31 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-31 23:59:59) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 316
+INFO "GET /apps/v1/get_article_descriptions HTTP/1.1" 200 54
+INFO "GET /api/v1/github_url HTTP/1.1" 200 1815
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 59
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 2420
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 481
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 2367
+ERROR 发生错误: Message: 'chromedriver.exe' executable may have wrong permissions.
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 214, in _start_process
+    self.process = subprocess.Popen(
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/subprocess.py", line 951, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/subprocess.py", line 1837, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+PermissionError: [Errno 13] Permission denied: 'templates/upload_app/chromedriver.exe'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/hot-tech-capture/upload_app/views.py", line 808, in get_articles_description_tag
+    page_source = get_page_content(link)
+  File "/root/hot-tech-capture/upload_app/views.py", line 876, in get_page_content
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/chromium/webdriver.py", line 55, in __init__
+    self.service.start()
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 104, in start
+    self._start_process(self._path)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 238, in _start_process
+    raise WebDriverException(
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
+
+ERROR Internal Server Error: /apps/v1/get_article_descriptions
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/root/hot-tech-capture/upload_app/views.py", line 398, in get_article_descriptions
+    articles_tag, articles_description = get_articles_description_tag(sql_links)  # 获取这些记录的 description
+ValueError: not enough values to unpack (expected 2, got 1)
+ERROR "GET /apps/v1/get_article_descriptions HTTP/1.1" 500 63517
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 00:01:21.739885) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 00:01:30.451018) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 00:01:35.524959) while time zone support is active.
+  warnings.warn(
+ERROR Internal Server Error: /api/v1/save_github_readme
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/utils/deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/middleware/clickjacking.py", line 27, in process_response
+    if response.get("X-Frame-Options") is not None:
+AttributeError: 'list' object has no attribute 'get'
+ERROR "GET /api/v1/save_github_readme HTTP/1.1" 500 78145
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 2364
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+INFO "POST /api/v1/update-chosen/ HTTP/1.1" 200 37
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 4109
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+INFO "POST /apps/v1/upload_excel HTTP/1.1" 200 9887
+WARNING Not Found: /api/get_email_stats
+WARNING "GET /api/get_email_stats HTTP/1.1" 404 5569
+INFO "GET /apps/v1/index HTTP/1.1" 200 34222
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 59
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 330
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 59
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 330
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "POST /api/v1/update-chosen/ HTTP/1.1" 200 37
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/search.css HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/css/charts.css HTTP/1.1" 304 0
+INFO "GET /static/css/main.css HTTP/1.1" 304 0
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 304 0
+INFO "GET /static/css/new_search.css HTTP/1.1" 304 0
+INFO "GET /static/js/new_search.js HTTP/1.1" 304 0
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 304 0
+INFO "GET /static/js/main2.js HTTP/1.1" 304 0
+INFO "GET /static/js/search.js HTTP/1.1" 304 0
+INFO "GET /static/js/charts.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 330
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/search.css HTTP/1.1" 304 0
+INFO "GET /static/css/new_search.css HTTP/1.1" 304 0
+INFO "GET /static/css/charts.css HTTP/1.1" 200 8941
+INFO "GET /static/js/charts.js HTTP/1.1" 200 16156
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/css/main.css HTTP/1.1" 304 0
+INFO "GET /static/js/main2.js HTTP/1.1" 304 0
+INFO "GET /static/js/new_search.js HTTP/1.1" 304 0
+INFO "GET /static/js/search.js HTTP/1.1" 304 0
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 304 0
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/trend-data HTTP/1.1" 301 0
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 330
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 5781
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 00:10:12.229370) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 00:10:17.994941) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 00:10:23.387952) while time zone support is active.
+  warnings.warn(
+ERROR Internal Server Error: /api/v1/save_github_readme
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/utils/deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/middleware/clickjacking.py", line 27, in process_response
+    if response.get("X-Frame-Options") is not None:
+AttributeError: 'list' object has no attribute 'get'
+ERROR "GET /api/v1/save_github_readme HTTP/1.1" 500 71095
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 01:10:07.412497) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 8498
+INFO code 400, message Bad request version ('À#À¬À®À+À')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO code 400, message Bad request syntax ('\x01!\x01\x01\x01\x01\x01\x01')
+WARNING "!" 400 -
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 03:10:13.009741) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 03:10:18.787314) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 03:10:25.662759) while time zone support is active.
+  warnings.warn(
+ERROR Internal Server Error: /api/v1/save_github_readme
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/utils/deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/middleware/clickjacking.py", line 27, in process_response
+    if response.get("X-Frame-Options") is not None:
+AttributeError: 'list' object has no attribute 'get'
+ERROR "GET /api/v1/save_github_readme HTTP/1.1" 500 70287
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 04:10:06.581038) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 04:10:13.043314) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 04:10:20.756040) while time zone support is active.
+  warnings.warn(
+ERROR Internal Server Error: /api/v1/save_github_readme
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/utils/deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/middleware/clickjacking.py", line 27, in process_response
+    if response.get("X-Frame-Options") is not None:
+AttributeError: 'list' object has no attribute 'get'
+ERROR "GET /api/v1/save_github_readme HTTP/1.1" 500 70643
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 05:10:06.301485) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 05:10:12.874038) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 05:10:18.911934) while time zone support is active.
+  warnings.warn(
+ERROR Internal Server Error: /api/v1/save_github_readme
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/utils/deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/middleware/clickjacking.py", line 27, in process_response
+    if response.get("X-Frame-Options") is not None:
+AttributeError: 'list' object has no attribute 'get'
+ERROR "GET /api/v1/save_github_readme HTTP/1.1" 500 75117
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 06:10:07.435016) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 20392
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO code 400, message Bad request version ('\x10')
+WARNING "!â       é            	node_data" 400 -
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO - Broken pipe from ('104.140.148.118', 61586)
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/main.css HTTP/1.1" 304 0
+INFO "GET /static/css/search.css HTTP/1.1" 304 0
+INFO "GET /static/css/new_search.css HTTP/1.1" 304 0
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 304 0
+INFO "GET /static/css/charts.css HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/js/main2.js HTTP/1.1" 304 0
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 304 0
+INFO "GET /static/js/search.js HTTP/1.1" 304 0
+INFO "GET /static/js/charts.js HTTP/1.1" 304 0
+INFO "GET /static/js/new_search.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 10333
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 10333
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 10333
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 10333
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 10333
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 10333
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14210
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+WARNING "  /*à     Cookie: mstshash=Administr" 400 -
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/main.css HTTP/1.1" 200 20573
+INFO "GET /static/css/search.css HTTP/1.1" 200 8799
+INFO "GET /static/css/new_search.css HTTP/1.1" 200 6814
+INFO "GET /static/css/charts.css HTTP/1.1" 200 8941
+INFO "GET /static/js/main.js HTTP/1.1" 200 3886
+INFO "GET /static/js/main2.js HTTP/1.1" 200 13490
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 200 805643
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 200 2821
+INFO "GET /static/js/search.js HTTP/1.1" 200 22096
+INFO "GET /static/js/new_search.js HTTP/1.1" 200 9340
+INFO "GET /static/js/charts.js HTTP/1.1" 200 16156
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO code 400, message Bad request syntax ('MGLNDD_139.224.114.224_18080')
+WARNING "MGLNDD_139.224.114.224_18080" 400 -
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.updated_time received a naive datetime (2025-07-26 12:10:08.790245) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 27684
+INFO code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+WARNING "  /*à     Cookie: mstshash=Administr" 400 -
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+WARNING Not Found: /
+WARNING "GET / HTTP/1.0" 404 5502
+INFO code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03GµÚ7åíÌ\x9cîø')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO code 400, message Bad HTTP/0.9 request type ('\x80\x00\x00()5¡3\x00\x00\x00\x00\x00\x00\x00\x02\x00\x01\x86')
+WARNING "  ()5¡3                                " 400 -
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+WARNING "  /*à     Cookie: mstshash=Administr" 400 -
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03#ûea\x0fï\x19M.+LUc')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03\x16ò$¶9')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/search.css HTTP/1.1" 304 0
+INFO "GET /static/css/main.css HTTP/1.1" 304 0
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 304 0
+INFO "GET /static/css/new_search.css HTTP/1.1" 304 0
+INFO "GET /static/css/charts.css HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/js/search.js HTTP/1.1" 304 0
+INFO "GET /static/js/main2.js HTTP/1.1" 304 0
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 304 0
+INFO "GET /static/js/new_search.js HTTP/1.1" 304 0
+INFO "GET /static/js/charts.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 11383
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 11383
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO code 400, message Bad request syntax ('\x04\x01\x01»gë.f\x00')
+WARNING "»gë.f " 400 -
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO code 400, message Bad request version ('Ê¶\xad¦éßjC')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5488
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03Á¢Ò\x11>\x9bÒ>å2\x87*\x00O«¨h³q"\x13öJñL¢ûb+¬*;')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5488
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+ERROR 发生错误: Message: 'chromedriver.exe' executable may have wrong permissions.
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 214, in _start_process
+    self.process = subprocess.Popen(
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/subprocess.py", line 951, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/subprocess.py", line 1837, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+PermissionError: [Errno 13] Permission denied: 'templates/upload_app/chromedriver.exe'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/hot-tech-capture/upload_app/views.py", line 808, in get_articles_description_tag
+    page_source = get_page_content(link)
+  File "/root/hot-tech-capture/upload_app/views.py", line 876, in get_page_content
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/chromium/webdriver.py", line 55, in __init__
+    self.service.start()
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 104, in start
+    self._start_process(self._path)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 238, in _start_process
+    raise WebDriverException(
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
+
+ERROR Internal Server Error: /apps/v1/get_article_descriptions
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/root/hot-tech-capture/upload_app/views.py", line 398, in get_article_descriptions
+    articles_tag, articles_description = get_articles_description_tag(sql_links)  # 获取这些记录的 description
+ValueError: not enough values to unpack (expected 2, got 1)
+ERROR "GET /apps/v1/get_article_descriptions HTTP/1.1" 500 63347
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/charts.css HTTP/1.1" 304 0
+INFO "GET /static/js/charts.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 11383
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO - Broken pipe from ('36.152.116.96', 35999)
+INFO - Broken pipe from ('36.152.116.96', 33932)
+INFO - Broken pipe from ('36.152.116.96', 36062)
+INFO - Broken pipe from ('36.152.116.96', 35998)
+INFO - Broken pipe from ('36.152.116.96', 33919)
+INFO - Broken pipe from ('36.152.116.96', 33909)
+INFO - Broken pipe from ('36.152.116.96', 36001)
+INFO - Broken pipe from ('36.152.116.96', 35997)
+INFO - Broken pipe from ('36.152.116.96', 36000)
+INFO - Broken pipe from ('36.152.116.96', 7795)
+INFO - Broken pipe from ('36.152.116.96', 7799)
+INFO - Broken pipe from ('36.152.116.96', 36048)
+INFO - Broken pipe from ('36.152.116.96', 36034)
+INFO - Broken pipe from ('36.152.116.96', 35994)
+INFO - Broken pipe from ('36.152.116.96', 7801)
+INFO - Broken pipe from ('36.152.116.96', 7800)
+INFO - Broken pipe from ('36.152.116.96', 33910)
+INFO - Broken pipe from ('36.152.116.96', 33917)
+INFO - Broken pipe from ('36.152.116.96', 36004)
+INFO - Broken pipe from ('36.152.116.96', 33922)
+INFO - Broken pipe from ('36.152.116.96', 36003)
+INFO - Broken pipe from ('36.152.116.96', 33916)
+INFO - Broken pipe from ('36.152.116.96', 7785)
+INFO - Broken pipe from ('36.152.116.96', 36005)
+INFO - Broken pipe from ('36.152.116.96', 33921)
+INFO - Broken pipe from ('36.152.116.96', 35993)
+INFO - Broken pipe from ('36.152.116.96', 7797)
+INFO - Broken pipe from ('36.152.116.96', 33911)
+INFO - Broken pipe from ('36.152.116.96', 36007)
+INFO - Broken pipe from ('36.152.116.96', 7791)
+INFO - Broken pipe from ('36.152.116.96', 36008)
+INFO - Broken pipe from ('36.152.116.96', 36011)
+INFO - Broken pipe from ('36.152.116.96', 7811)
+INFO - Broken pipe from ('36.152.116.96', 36010)
+INFO - Broken pipe from ('36.152.116.96', 35992)
+INFO - Broken pipe from ('36.152.116.96', 33897)
+INFO - Broken pipe from ('36.152.116.96', 35995)
+INFO - Broken pipe from ('36.152.116.96', 7809)
+INFO - Broken pipe from ('36.152.116.96', 7790)
+INFO - Broken pipe from ('36.152.116.96', 35996)
+INFO - Broken pipe from ('36.152.116.96', 36009)
+INFO - Broken pipe from ('36.152.116.96', 33898)
+INFO - Broken pipe from ('36.152.116.96', 7794)
+INFO - Broken pipe from ('36.152.116.96', 7796)
+INFO - Broken pipe from ('36.152.116.96', 33915)
+INFO - Broken pipe from ('36.152.116.96', 35991)
+INFO - Broken pipe from ('36.152.116.96', 7793)
+INFO - Broken pipe from ('36.152.116.96', 35986)
+INFO - Broken pipe from ('36.152.116.96', 33920)
+INFO - Broken pipe from ('36.152.116.96', 33914)
+WARNING Not Found: /
+WARNING "GET / HTTP/1.1" 404 5494
+INFO code 505, message Invalid HTTP version (2.0)
+ERROR "PRI * HTTP/2.0" 505 -
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO code 505, message Invalid HTTP version (2.0)
+ERROR "PRI * HTTP/2.0" 505 -
+INFO code 400, message Bad request version ('À\x14À')
+ERROR You're accessing the development server over HTTPS, but it only supports HTTP.
+WARNING Not Found: /wiki
+WARNING "GET /wiki HTTP/1.1" 404 5524
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 11383
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 79
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/trend-data HTTP/1.1" 301 0
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 317
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 482
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5545
+INFO "GET /api/v1/save_github_readme HTTP/1.1" 200 81
+INFO /root/hot-tech-capture/upload_app/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+July 25, 2025 - 23:54:47
+Django version 4.2.23, using settings 'Get_Hot_Project.settings'
+Starting development server at http://0.0.0.0:18080/
+Quit the server with CONTROL-C.
+
+未匹配的标签: "AI编程"
+未匹配的标签: "架构"
+未匹配的标签: "前端"
+未匹配的标签: "AI编程"
+未匹配的标签: "架构"
+未匹配的标签: "前端"
+未匹配的标签: "AI编程"
+未匹配的标签: "架构"
+未匹配的标签: "前端"
+未匹配的标签: "AI编程"
+未匹配的标签: "架构"
+未匹配的标签: "前端"
+未匹配的标签: "AI编程"
+未匹配的标签: "架构"
+未匹配的标签: "前端"
+INFO Watching for file changes with StatReloader
+WARNING Not Found: /favicon.ico
+WARNING "GET /favicon.ico HTTP/1.1" 404 5929
+INFO "GET /api/v1/cve_spider?dateFrom=2025-07-26&dateTo=2025-07-27 HTTP/1.1" 200 38
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /static/css/main.css HTTP/1.1" 304 0
+INFO "GET /static/css/search.css HTTP/1.1" 304 0
+INFO "GET /static/image/gongsi1.png HTTP/1.1" 304 0
+INFO "GET /static/css/new_search.css HTTP/1.1" 304 0
+INFO "GET /static/js/main.js HTTP/1.1" 304 0
+INFO "GET /static/js/main2.js HTTP/1.1" 304 0
+INFO "GET /static/js/main_wbw.js HTTP/1.1" 304 0
+INFO "GET /static/js/search.js HTTP/1.1" 304 0
+INFO "GET /static/js/new_search.js HTTP/1.1" 304 0
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-20 23:59:59) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-05-31 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-05-31 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-06-30 23:59:59) while time zone support is active.
+  warnings.warn(
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 9669
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-06-30 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-01 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-10 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-11 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-20 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField HotProjects.created_time received a naive datetime (2025-07-31 23:59:59) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-21 00:00:00) while time zone support is active.
+  warnings.warn(
+/root/miniconda3/envs/GetHotProjects/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField CveSpider.created_time received a naive datetime (2025-07-31 23:59:59) while time zone support is active.
+  warnings.warn(
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 318
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 483
+INFO "GET /api/v1/cve_add_description HTTP/1.1" 200 38
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 19942
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 318
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 483
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=2&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12244
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=3&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 7223
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=2&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12244
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 19942
+INFO "GET /api/v1/cve_spider?dateFrom=2025-07-25 HTTP/1.1" 200 54
+INFO "GET /api/v1/cve_spider?dateFrom=2025-07-25 HTTP/1.1" 200 54
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 19942
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 318
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 483
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=2&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12244
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=3&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 7223
+INFO "GET /api/v1/cve_spider?dateFrom=2025-07-25 HTTP/1.1" 200 54
+INFO "GET /api/v1/cve_spider?dateFrom=2025-07-25&dateTo=2025-07-26 HTTP/1.1" 200 38
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 8218
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 318
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 483
+INFO "GET /api/v1/cve_spider?dateFrom=2025-07-25 HTTP/1.1" 200 54
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 8218
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 318
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 483
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=2&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 7553
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=3&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 13191
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=4&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 13130
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=5&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12681
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=6&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 17184
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=5&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12681
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=4&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 13130
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=3&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 13191
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=2&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 10353
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 8218
+INFO "GET /api/v1/cve_add_description HTTP/1.1" 200 38
+INFO "GET /apps/v1/index HTTP/1.1" 200 33191
+INFO "GET /api/v1/get-chosen-content/?page=1&page_size=10&if_chosen=1 HTTP/1.1" 200 513
+INFO "GET /api/v1/project-tags/ HTTP/1.1" 200 584
+INFO "GET /api/v1/content-table/?page=1&page_size=10 HTTP/1.1" 200 14313
+INFO "GET /api/v1/article-tags/ HTTP/1.1" 200 12
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=1&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 16621
+INFO "GET /api/v1/trend-data/ HTTP/1.1" 200 318
+INFO "GET /api/v1/stats-data/ HTTP/1.1" 200 483
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=2&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12668
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=3&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 13191
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=4&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 13130
+INFO "GET /apps/v1/cve_info_list?cveId=all&pageFrom=5&pageSize=10&dateFrom=all&dateTo=all HTTP/1.1" 200 12681
+INFO "GET /api/v1/content-table/?page=2&page_size=10 HTTP/1.1" 200 11383
