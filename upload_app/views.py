@@ -496,11 +496,93 @@ def save_github_readme(request):
 """
 
 
+def cve_spider(request):
+    if request.GET.get('dateFrom') and request.GET.get('dateTo'):
+        dateFrom = request.GET['dateFrom']
+        dateTo = request.GET['dateTo']
+    else:
+        return JsonResponse({"code": 500, "message": "Some parameter is missing."})
+
+    cve_headers = {
+        "User-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+        "referer": "https://nvd.nist.gov/vuln/search"
+    }
+    cve_url = "https://nvd.nist.gov/extensions/nudp/services/json/nvd/cve/search/results?resultType=records&vulnRevisionStatusList=published%2Creceived&publishDateRangeStart=" + dateFrom + "&publishDateRangeEnd=" + dateTo + "&cvssVersion=4.0&baseScoreMin=0&baseScoreMax=10&rowCount=1000&offset=0"
+    resp = requests.get(cve_url, headers=cve_headers)
+    result_list = json.loads(resp.text)
+    result_num = result_list['response'][0]["grid"]["totalResults"]
+    for i in range(int(result_num)):
+        cve_id = result_list['response'][0]["grid"]["vulnerabilities"][i]["cve"]["id"]
+        description = result_list['response'][0]["grid"]["vulnerabilities"][i]["cve"]["descriptions"][0]["value"]
+        published_time = result_list['response'][0]["grid"]["vulnerabilities"][i]["cve"]["published"]
+        url = "https://nvd.nist.gov/vuln/detail/" + cve_id
+        urlIfExist = CveSpider.objects.filter(cve_id=cve_id).count()
+        if urlIfExist == 0:
+            CveSpider.objects.create(
+                cve_id=cve_id,
+                description=description,
+                url=url,
+                if_sent=0,
+                if_chosen=0,
+                published_time=published_time,
+                created_time=datetime.now(),
+                updated_time=datetime.now(),
+            )
+        else:
+            print("nothing is updated")
+    return JsonResponse({"code": 200, "message": "Successful"})
+def cve_add_description(request):
+    url = "https://zhenze-huhehaote.cmecloud.cn/v1/chat/completions"
+    api_key = "aJophUtdoVendosyMJIWcuaDTtcaBmpBrMh7Y8EvDRg"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    description = CveSpider.objects.filter(description_cn="").values()
+    if(len(description)) > 0:
+        for i in range(len(description)):
+            print()
+            #调用智能体翻译漏洞详情
+            data = {
+                    "model": "Qwen2.5-72B-Instruct-64K",
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "以下内容为一个公开的CVE漏洞信息，请将这段内容翻译成中文，直接将翻译后的内容返回就好，不要回答其他任何无关的内容: " + description[i]['description']
+                        },
+                        {
+                            "role": "system",
+                            "content": ""
+                        }
+                    ],
+                    "max_tokens": 16384,
+                    "stream": False,
+                    "temperature": 0.7,
+                    "top_p": 0.9
+                }
+            response = requests.post(url, headers=headers, json=data)
+            if response.status_code == 200:
+                response.encoding = "utf-8"
+                description_cn = json.loads(response.text)['choices'][0]['message']['content']
+                CveSpider.objects.filter(cve_id=description[i]['cve_id']).update(
+                    description_cn = description_cn
+                )
+            else:
+                print(f"请求失败，状态码: {response.status_code}")
+                print(response.text)
+                return JsonResponse({"code": 500, "message": f"请求失败，状态码: {response.status_code}"})
+    return JsonResponse({"code": 200, "message": "Successful"})
+
 def cve_email_send(request):
-    now = datetime.now().date()
-    cve_id_list = CveSpider.objects.filter(created_time__gte=now).values("cve_id")
-    description_cn_list = CveSpider.objects.filter(created_time__gte=now).values("description_cn")
-    url_list = CveSpider.objects.filter(created_time__gte=now).values("url")
+    if request.GET.get('dateFrom') == None or request.GET.get('dateTo') == None or request.GET.get(
+            'auth') == None or request.GET.get('sender') == None:
+        return JsonResponse({"code": 500, "message": "Some parameter is missing."})
+    dateFrom = datetime.strptime(request.GET['dateFrom'], '%Y%m%d').strftime('%Y-%m-%d %H:%M:%S')
+    dateTo = datetime.strptime(request.GET['dateTo'], '%Y%m%d').strftime('%Y-%m-%d %H:%M:%S')
+    cve_id_list = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).values("cve_id")
+    description_cn_list = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).values(
+        "description_cn")
+    url_list = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).values("url")
     # published_time_list = CveSpider.objects.filter(created_time__gte=now).values("published_time")
 
     auth = request.GET['auth']
@@ -508,8 +590,7 @@ def cve_email_send(request):
     mailserver = "smtp.js.chinamobile.com"
 
     send_list = ["jinyiran@js.chinamobile.com", "352903859@qq.com"]
-
-    text_content = "今日CVE漏洞披露信息：\n"
+    text_content = request.GET['dateFrom'] + " CVE漏洞披露信息：\n"
     for i in range(len(cve_id_list)):
         text_content += "· " + cve_id_list[i]["cve_id"] + ":\n"
         text_content += "漏洞简介: " + description_cn_list[i]["description_cn"] + "\n"
@@ -551,7 +632,7 @@ def cve_email_send(request):
     """
 
     # 发送邮件
-    subject = '【自动发送】今日CVE漏洞披露信息'
+    subject = '【自动发送】' + request.GET['dateFrom'] + ' CVE漏洞披露信息'
     message = MIMEText(text_content, 'plain', 'utf-8')
     message['From'] = sender  # 设置发件人信息
     message['To'] = ','.join(send_list)  # 设置收件人信息，多个收件人用逗号分隔
@@ -565,56 +646,40 @@ def cve_email_send(request):
 
 
 def cve_info_list(request):
-    if request.GET.get('cveId') == None or request.GET.get('pageFrom') == None or request.GET.get(
-            'pageSize') == None or request.GET.get('dateFrom') == None or request.GET.get('dateTo') == None:
+    if request.GET.get('cveId') == None or request.GET.get('pageFrom') == None or request.GET.get('pageSize') == None or request.GET.get('dateFrom') == None or request.GET.get('dateTo') == None:
         return JsonResponse({"code": 500, "message": "Some parameter is missed"})
-    elif request.GET.get('cveId') == "all" and request.GET.get('dateFrom') != "all" and request.GET.get(
-            'dateTo') != "all":
+    elif request.GET.get('cveId') == "all" and request.GET.get('dateFrom') != "all" and request.GET.get('dateTo') != "all":
         dateFrom = datetime.strptime(request.GET['dateFrom'], '%Y%m%d').strftime('%Y-%m-%d %H:%M:%S')
         dateTo = datetime.strptime(request.GET['dateTo'], '%Y%m%d').strftime('%Y-%m-%d %H:%M:%S')
         pageSize = int(request.GET['pageSize'])
         pageFrom = int(request.GET['pageFrom'])
         offset = (pageFrom - 1) * pageSize
-        result_list = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).order_by(
-            '-created_time').values()[offset:offset + pageSize]
-        result_num = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).order_by(
-            '-created_time').count()
-        return JsonResponse({"code": 200, "message": "Successful",
-                             "data": {"result_num": result_num, "detail": list(result_list.values())}})
-    elif request.GET.get('cveId') != "all" and request.GET.get('dateFrom') != "all" and request.GET.get(
-            'dateTo') != "all":
+        result_list = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).order_by('-created_time').values()[offset:offset + pageSize]
+        result_num = CveSpider.objects.filter(created_time__gte=dateFrom, created_time__lte=dateTo).order_by('-created_time').count()
+        return JsonResponse({"code": 200, "message": "Successful", "data": {"result_num": result_num, "detail": list(result_list.values())}})
+    elif request.GET.get('cveId') != "all" and request.GET.get('dateFrom') != "all" and request.GET.get('dateTo') != "all":
         dateFrom = datetime.strptime(request.GET['dateFrom'], '%Y%m%d').strftime('%Y-%m-%d %H:%M:%S')
         dateTo = datetime.strptime(request.GET['dateTo'], '%Y%m%d').strftime('%Y-%m-%d %H:%M:%S')
         pageSize = int(request.GET['pageSize'])
         pageFrom = int(request.GET['pageFrom'])
         offset = (pageFrom - 1) * pageSize
-        result_list = CveSpider.objects.filter(
-            Q(cve_id=request.GET['cveId']) & Q(created_time__gte=dateFrom, created_time__lte=dateTo)).order_by(
-            '-created_time').values()[offset:offset + pageSize]
-        result_num = CveSpider.objects.filter(
-            Q(cve_id=request.GET['cveId']) & Q(created_time__gte=dateFrom, created_time__lte=dateTo)).order_by(
-            '-created_time').count()
-        return JsonResponse({"code": 200, "message": "Successful",
-                             "data": {"result_num": result_num, "detail": list(result_list.values())}})
-    elif request.GET.get('cveId') != "all" and request.GET.get('dateFrom') == "all" and request.GET.get(
-            'dateTo') == "all":
+        result_list = CveSpider.objects.filter(Q(cve_id=request.GET['cveId']) & Q(created_time__gte=dateFrom, created_time__lte=dateTo)).order_by('-created_time').values()[offset:offset + pageSize]
+        result_num = CveSpider.objects.filter(Q(cve_id=request.GET['cveId']) & Q(created_time__gte=dateFrom, created_time__lte=dateTo)).order_by('-created_time').count()
+        return JsonResponse({"code": 200, "message": "Successful", "data": {"result_num": result_num, "detail": list(result_list.values())}})
+    elif request.GET.get('cveId') != "all" and request.GET.get('dateFrom') == "all" and request.GET.get('dateTo') == "all":
         pageSize = int(request.GET['pageSize'])
         pageFrom = int(request.GET['pageFrom'])
         offset = (pageFrom - 1) * pageSize
-        result_list = CveSpider.objects.filter(cve_id=request.GET['cveId']).order_by('-created_time').values()[
-                      offset:offset + pageSize]
+        result_list = CveSpider.objects.filter(cve_id=request.GET['cveId']).order_by('-created_time').values()[offset:offset + pageSize]
         result_num = CveSpider.objects.filter(cve_id=request.GET['cveId']).order_by('-created_time').count()
-        return JsonResponse({"code": 200, "message": "Successful",
-                             "data": {"result_num": result_num, "detail": list(result_list.values())}})
-    elif request.GET.get('cveId') == "all" and request.GET.get('dateFrom') == "all" and request.GET.get(
-            'dateTo') == "all":
+        return JsonResponse({"code": 200, "message": "Successful", "data": {"result_num": result_num, "detail": list(result_list.values())}})
+    elif request.GET.get('cveId') == "all" and request.GET.get('dateFrom') == "all" and request.GET.get('dateTo') == "all":
         pageSize = int(request.GET['pageSize'])
         pageFrom = int(request.GET['pageFrom'])
         offset = (pageFrom - 1) * pageSize
         result_list = CveSpider.objects.order_by('-created_time').values()[offset:offset + pageSize]
         result_num = CveSpider.objects.order_by('-created_time').count()
-        return JsonResponse({"code": 200, "message": "Successful",
-                             "data": {"result_num": result_num, "detail": list(result_list.values())}})
+        return JsonResponse({"code": 200, "message": "Successful", "data": {"result_num": result_num, "detail": list(result_list.values())}})
     else:
         return JsonResponse({"code": 500, "message": "Internal Error"})
 
