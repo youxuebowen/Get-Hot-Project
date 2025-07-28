@@ -385,7 +385,8 @@ def success(request):
 
 def get_article_url(request):
     # 获取热门文章的链接，榜单三天刷一次，每三天运行一次就行了
-    articles = get_artical_link()
+    # articles = get_artical_link()
+    articles = get_bokeyuan_link()
     if insert_articles(articles):
         return JsonResponse({"message": "文章数据已成功获取并插入数据库"}, json_dumps_params={'ensure_ascii': False})
     else:
@@ -395,11 +396,120 @@ def get_article_url(request):
 def get_article_descriptions(request):
     # 更新description和tag
     sql_links = read_articles_sql()  # 获取description为空的记录,且type=2是掘金类型
-    articles_tag, articles_description = get_articles_description_tag(sql_links)  # 获取这些记录的 description
+    # articles_tag, articles_description = get_articles_description_tag(sql_links)  # 获取这些记录的 description
+    articles_tag, articles_description = get_bokeyuan_description_and_tag(sql_links)
     update_articles_descriptions(sql_links, articles_tag, articles_description)  # 更新对应记录
     return JsonResponse({"message": f"成功更新 {len(articles_description)} 条文章描述及标签"},
                         json_dumps_params={'ensure_ascii': False})
+def get_bokeyuan_description_and_tag(informations):
+    articles_description = []
+    articles_tag = []
+    a = 1
+    headers_list = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Referer": "https://juejin.cn/",
+    }
+    url_3 = 'https://yuanqi.tencent.com/openapi/v1/agent/chat/completions'
+    token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
+    assistant_id_4 = "eA3znc5W7lRs"
+    token = token_4
+    assistant_id = assistant_id_4
 
+    for info in informations:
+        a = a + 1
+        link = info['url']
+        description = None
+        tag = None
+        try:
+            # 获取网页内容
+            res = requests.get(link, headers=headers_list, timeout=10)
+            res.raise_for_status()  # 检查请求是否成功
+            soup = BeautifulSoup(res.text, features='html.parser')
+            time.sleep(1)
+            soup_text = soup.find(class_="postBody")
+            if soup_text is not None:  # 检查 soup_text 是否为 None
+                content = soup_text.get_text()
+                # 调用API
+                headers = {
+                    'X-Source': 'openapi',
+                    'Content-Type': 'application/json',
+                    'Authorization': f'Bearer {token}',
+                }
+                data_1 = {
+                    "assistant_id": f"{assistant_id}",
+                    "user_id": "username",
+                    "stream": False,
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": content[:100000],  # 限制文本长度，避免超出API限制
+                                }
+                            ]
+                        }
+                    ]
+                }
+                # 发送请求到智能体API
+                api_res = requests.post(url_3, headers=headers, json=data_1, timeout=30)
+                api_res.raise_for_status()  # 检查API请求是否成功
+                # 解析JSON响应
+                try:
+                    data_artical = api_res.json()
+                    content_description = data_artical['choices'][0]["message"]["content"]
+                    description_tag = content_description.rsplit('#', 1)
+                    pretag = description_tag[0]
+                    pretag = pretag[:20]
+                    description = description_tag[1]
+                    tag = pretag
+                    print(f"成功获取链接 {link} 的描述")
+                except (KeyError, IndexError) as e:
+                    print(f"解析API响应失败: {e}")
+                    print(f"API返回内容: {api_res.text[:500]}")  # 打印部分响应内容用于调试
+                except requests.exceptions.JSONDecodeError:
+                    print(f"API返回非JSON格式内容: {api_res.text[:500]}")
+            else:
+                print(f"未在链接 {link} 中找到类名为 'postBody' 的元素")
+        except requests.exceptions.RequestException as e:
+            print(f"处理链接 {link} 时出错: {e}")
+        articles_description.append({"description": description})
+        articles_tag.append({"tag": tag})
+        # 限制处理数量（测试用）
+        if a > 8:
+            break
+    return articles_tag, articles_description
+
+def get_bokeyuan_link():
+    results = []
+    for i in range(1, 5):
+        url = f"https://www.cnblogs.com/pick/{i}/"
+        headers = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+        }
+
+        try:
+            res = requests.get(url=url, headers=headers)
+            res.raise_for_status()
+            soup = BeautifulSoup(res.text, 'html.parser')
+            articles_list = soup.find_all('a', class_="post-item-title")
+            # 提取每个a标签的标题和链接
+            for a in articles_list:
+                title = a.text.strip()  # 获取标题文本并去除空白字符
+                link = a.get('href')  # 获取href属性值
+                results.append({
+                    "url": link,
+                    "name": title,
+                    "content": "",
+                    "description": "",
+                    "tag": " ",
+                    "type": 2,
+                    "if_sent": 0,
+                })
+        except Exception as e:
+            print(f"爬取失败: {str(e)}")
+            return []
+    return results
 
 # 获取github的url链接并存储到数据库
 def github_url(request):
@@ -824,7 +934,7 @@ def insert_articles(articles):
 def read_articles_sql():
     results = []
     # 使用 ORM 查询 description 字段为空的记录，限制为三个防止爬取不回来
-    limit_count = 1
+    limit_count = 3
     articles = HotProjects.objects.filter(description='').values('id', 'url', 'name', 'type', 'if_sent')[:limit_count]
     # 转换为字典格式
     for row in articles:
@@ -1117,7 +1227,7 @@ def agent(text):
     }
 
     response = requests.post(url, headers=headers, json=data)
-
+    print(response.json())
     response_data = response.json()
     # print(response.text)
     content_description = response_data['choices'][0]["message"]["content"]
