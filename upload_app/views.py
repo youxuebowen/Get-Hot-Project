@@ -410,8 +410,10 @@ def get_bokeyuan_description_and_tag(informations):
         "Referer": "https://juejin.cn/",
     }
     url_3 = 'https://yuanqi.tencent.com/openapi/v1/agent/chat/completions'
-    token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
-    assistant_id_4 = "eA3znc5W7lRs"
+    # token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
+    # assistant_id_4 = "eA3znc5W7lRs"
+    assistant_id_4 = "STsbqgrcac7M"
+    token_4 = 'pJSi8ZQPaJTDstwUOW0ZZXMxdJKycKQB'
     token = token_4
     assistant_id = assistant_id_4
 
@@ -514,7 +516,7 @@ def get_bokeyuan_link():
 # 获取github的url链接并存储到数据库
 def github_url(request):
     period = request.GET.get('period', 'past_week')
-    data_count = request.GET.get('data_count', 20)  # 每次爬50条
+    data_count = request.GET.get('data_count', 20)  # 每次爬20条
     language = request.GET.get('language', 'Python')
 
     # 限制爬取的条数在0-100
@@ -1210,12 +1212,15 @@ def agent(text):
     headers = {
         'X-Source': 'openapi',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH'
+        # 'Authorization': 'Bearer sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH'
+        'Authorization': 'Bearer pJSi8ZQPaJTDstwUOW0ZZXMxdJKycKQB'
     }
 
     # 构建工作流请求体
     data = {
-        "assistant_id": "eA3znc5W7lRs",
+        # "assistant_id": "eA3znc5W7lRs",
+        # "user_id": "username",
+        "assistant_id": "STsbqgrcac7M",
         "user_id": "username",
         "stream": False,
         "messages": [{
