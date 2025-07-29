@@ -401,86 +401,86 @@ def get_article_descriptions(request):
     update_articles_descriptions(sql_links, articles_tag, articles_description)  # 更新对应记录
     return JsonResponse({"message": f"成功更新 {len(articles_description)} 条文章描述及标签"},
                         json_dumps_params={'ensure_ascii': False})
-# def get_bokeyuan_description_and_tag(informations):
-#     articles_description = []
-#     articles_tag = []
-#     a = 1
-#     headers_list = {
-#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-#         "Referer": "https://juejin.cn/",
-#     }
-#     url_3 = 'https://yuanqi.tencent.com/openapi/v1/agent/chat/completions'
-#     # token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
-#     # assistant_id_4 = "eA3znc5W7lRs"
-#     assistant_id_4 = "STsbqgrcac7M"
-#     token_4 = 'pJSi8ZQPaJTDstwUOW0ZZXMxdJKycKQB'
-#     token = token_4
-#     assistant_id = assistant_id_4
-#
-#     for info in informations:
-#         a = a + 1
-#         link = info['url']
-#         description = None
-#         tag = None
-#         try:
-#             # 获取网页内容
-#             res = requests.get(link, headers=headers_list, timeout=10)
-#             res.raise_for_status()  # 检查请求是否成功
-#             soup = BeautifulSoup(res.text, features='html.parser')
-#             time.sleep(1)
-#             soup_text = soup.find(class_="postBody")
-#             if soup_text is not None:  # 检查 soup_text 是否为 None
-#                 content = soup_text.get_text()
-#                 # 调用API
-#                 headers = {
-#                     'X-Source': 'openapi',
-#                     'Content-Type': 'application/json',
-#                     'Authorization': f'Bearer {token}',
-#                 }
-#                 data_1 = {
-#                     "assistant_id": f"{assistant_id}",
-#                     "user_id": "username",
-#                     "stream": False,
-#                     "messages": [
-#                         {
-#                             "role": "user",
-#                             "content": [
-#                                 {
-#                                     "type": "text",
-#                                     "text": content[:100000],  # 限制文本长度，避免超出API限制
-#                                 }
-#                             ]
-#                         }
-#                     ]
-#                 }
-#                 # 发送请求到智能体API
-#                 api_res = requests.post(url_3, headers=headers, json=data_1, timeout=30)
-#                 api_res.raise_for_status()  # 检查API请求是否成功
-#                 # 解析JSON响应
-#                 try:
-#                     data_artical = api_res.json()
-#                     content_description = data_artical['choices'][0]["message"]["content"]
-#                     description_tag = content_description.rsplit('#', 1)
-#                     pretag = description_tag[0]
-#                     pretag = pretag[:20]
-#                     description = description_tag[1]
-#                     tag = pretag
-#                     print(f"成功获取链接 {link} 的描述")
-#                 except (KeyError, IndexError) as e:
-#                     print(f"解析API响应失败: {e}")
-#                     print(f"API返回内容: {api_res.text[:500]}")  # 打印部分响应内容用于调试
-#                 except requests.exceptions.JSONDecodeError:
-#                     print(f"API返回非JSON格式内容: {api_res.text[:500]}")
-#             else:
-#                 print(f"未在链接 {link} 中找到类名为 'postBody' 的元素")
-#         except requests.exceptions.RequestException as e:
-#             print(f"处理链接 {link} 时出错: {e}")
-#         articles_description.append({"description": description})
-#         articles_tag.append({"tag": tag})
-#         # 限制处理数量（测试用）
-#         if a > 8:
-#             break
-#     return articles_tag, articles_description
+def get_bokeyuan_description_and_tag(informations):
+    articles_description = []
+    articles_tag = []
+    a = 1
+    headers_list = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Referer": "https://juejin.cn/",
+    }
+    url_3 = 'https://yuanqi.tencent.com/openapi/v1/agent/chat/completions'
+    # token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
+    # assistant_id_4 = "eA3znc5W7lRs"
+    assistant_id_4 = "STsbqgrcac7M"
+    token_4 = 'pJSi8ZQPaJTDstwUOW0ZZXMxdJKycKQB'
+    token = token_4
+    assistant_id = assistant_id_4
+
+    for info in informations:
+        a = a + 1
+        link = info['url']
+        description = None
+        tag = None
+        try:
+            # 获取网页内容
+            res = requests.get(link, headers=headers_list, timeout=10)
+            res.raise_for_status()  # 检查请求是否成功
+            soup = BeautifulSoup(res.text, features='html.parser')
+            time.sleep(1)
+            soup_text = soup.find(class_="postBody")
+            if soup_text is not None:  # 检查 soup_text 是否为 None
+                content = soup_text.get_text()
+                # 调用API
+                headers = {
+                    'X-Source': 'openapi',
+                    'Content-Type': 'application/json',
+                    'Authorization': f'Bearer {token}',
+                }
+                data_1 = {
+                    "assistant_id": f"{assistant_id}",
+                    "user_id": "username",
+                    "stream": False,
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": content[:100000],  # 限制文本长度，避免超出API限制
+                                }
+                            ]
+                        }
+                    ]
+                }
+                # 发送请求到智能体API
+                api_res = requests.post(url_3, headers=headers, json=data_1, timeout=30)
+                api_res.raise_for_status()  # 检查API请求是否成功
+                # 解析JSON响应
+                try:
+                    data_artical = api_res.json()
+                    content_description = data_artical['choices'][0]["message"]["content"]
+                    description_tag = content_description.rsplit('#', 1)
+                    pretag = description_tag[0]
+                    pretag = pretag[:20]
+                    description = description_tag[1]
+                    tag = pretag
+                    print(f"成功获取链接 {link} 的描述")
+                except (KeyError, IndexError) as e:
+                    print(f"解析API响应失败: {e}")
+                    print(f"API返回内容: {api_res.text[:500]}")  # 打印部分响应内容用于调试
+                except requests.exceptions.JSONDecodeError:
+                    print(f"API返回非JSON格式内容: {api_res.text[:500]}")
+            else:
+                print(f"未在链接 {link} 中找到类名为 'postBody' 的元素")
+        except requests.exceptions.RequestException as e:
+            print(f"处理链接 {link} 时出错: {e}")
+        articles_description.append({"description": description})
+        articles_tag.append({"tag": tag})
+        # 限制处理数量（测试用）
+        if a > 8:
+            break
+    return articles_tag, articles_description
 
 
 def get_bokeyuan_description_and_tag(informations):

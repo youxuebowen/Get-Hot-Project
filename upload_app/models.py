@@ -23,7 +23,8 @@ class HotProjects(models.Model):
     #github项目的readme内容/文章的完整内容
     content = models.TextField()
     #content的精简内容
-    description = models.TextField()
+    # description = models.TextField()
+    description = models.TextField(null=True, blank=True)  # 允许 NULL 和空字符串
     #  github项目的原始url/文章的原始url
     url = models.URLField()
     # 给github项目 / 文章打标签
