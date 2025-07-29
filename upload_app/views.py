@@ -598,7 +598,8 @@ def save_github_readme(request):
             return_data.append([content, tag])
             # return JsonResponse({"code": 200, "data": tag})
         except Exception as e:
-            return JsonResponse({"code": 500, "message": str(e), "data": return_data})
+            continue
+            # return JsonResponse({"code": 500, "message": str(e), "data": return_data})
 
     return return_data
 
@@ -1212,16 +1213,16 @@ def agent(text):
     headers = {
         'X-Source': 'openapi',
         'Content-Type': 'application/json',
-        # 'Authorization': 'Bearer sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH'
-        'Authorization': 'Bearer pJSi8ZQPaJTDstwUOW0ZZXMxdJKycKQB'
+        'Authorization': 'Bearer sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH'
+        # 'Authorization': 'Bearer pJSi8ZQPaJTDstwUOW0ZZXMxdJKycKQB'
     }
 
     # 构建工作流请求体
     data = {
-        # "assistant_id": "eA3znc5W7lRs",
-        # "user_id": "username",
-        "assistant_id": "STsbqgrcac7M",
+        "assistant_id": "eA3znc5W7lRs",
         "user_id": "username",
+        # "assistant_id": "STsbqgrcac7M",
+        # "user_id": "username",
         "stream": False,
         "messages": [{
             "role": "user",
