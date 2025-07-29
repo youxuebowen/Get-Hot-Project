@@ -816,7 +816,8 @@ def send_welcome_email(usernames, Emails, verification_codes):
     :param verification_code: 用户校验码
     :return: 发送成功返回 True，失败返回 Falseauth_user
     """
-    mailserver = 'smtp.qq.com'
+    #mailserver = 'smtp.qq.com'
+    mailserver = 'smtp.js.chinamobile.com'
     subject = '【WideSeek】每周技术热点推送！'
     userName_SendMail = Emails[0]
     userName_AuthCode = verification_codes[0]

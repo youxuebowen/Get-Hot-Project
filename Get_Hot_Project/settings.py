@@ -141,7 +141,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # 邮箱配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
+#EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
+EMAIL_HOST = 'smtp.js.chinamobile.com'
 EMAIL_PORT = 465  # 邮件服务器端口
 EMAIL_HOST_USER = ""  # 邮箱
 EMAIL_HOST_PASSWORD = ''  # 邮箱授权码
