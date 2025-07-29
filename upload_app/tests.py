@@ -1,16 +1,7 @@
 import requests
 import json
-
-url = "http://127.0.0.1:8000/apps/v1/get_github"
-data = {
-    "search": "python",
-    "pages": 3,
-    "project_num_one_page": 15
-}
-
-headers = {
-    "Content-Type": "application/json"
-}
-
-response = requests.post(url, data=json.dumps(data), headers=headers)
-print(response.json())
+if __name__ == '__main__':
+    content = [1, 2, 3]  # 原长度为 3
+    sliced_content = content[:9]
+    print(len(sliced_content))  # 输出: 3
+    print(sliced_content)       # 输出: [1, 2, 3]
