@@ -1163,7 +1163,10 @@ def update_articles_descriptions(sql_links, articles_tag, articles_descriptions)
         description = articles_description["description"]
         tag = articles_tag["tag"]
         try:
-            updated_count = HotProjects.objects.filter(id=article_id).update(description=description, tag=tag, updated_time=datetime.now())
+            if not description:  # 如果是 None 或空字符串
+                continue
+            else:
+                updated_count = HotProjects.objects.filter(id=article_id).update(description=description, tag=tag, updated_time=datetime.now())
             # article.description = description
             # article.tag = tag
             # article.save()
