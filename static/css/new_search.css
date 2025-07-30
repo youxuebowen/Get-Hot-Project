@@ -1,7 +1,8 @@
       
-        .cve-container {
+.cve-container {
             box-sizing: border-box;
-            margin: 0;
+            margin: 0 auto;
+            padding: 0;
             --cve-primary: #4a6cf7;
             --cve-primary-hover: #3451d1;
             --cve-border: #ddd;
@@ -12,7 +13,7 @@
             --cve-success: #28a745;
             --cve-error: #dc3545;
             width: 100%;
-            max-width: 1500px;
+            max-width: 100%;
             padding: 30px;
             background: white;
             border-radius: var(--cve-radius);
@@ -46,13 +47,13 @@
         }
         
         .cve-search-section {
-            flex: 1;
-            min-width: 300px;
+            flex: 2;
+            min-width: 280px;
         }
         
         .cve-time-section {
             flex: 1;
-            min-width: 350px;
+            min-width: 280px;
         }
         
         .cve-search-box {

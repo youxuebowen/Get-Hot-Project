@@ -961,7 +961,7 @@ def cve_email_send(request):
     sender = request.GET['sender']
     mailserver = "smtp.js.chinamobile.com"
 
-    send_list = ["jinyiran@js.chinamobile.com", "352903859@qq.com"]
+    send_list = ["jinyiran@js.chinamobile.com", "renyh@js.chinamobile.com", "wujianzhe@js.chinamobile.com"]
     text_content = request.GET['dateFrom'] + " CVE漏洞披露信息：\n"
     for i in range(len(cve_id_list)):
         text_content += "· " + cve_id_list[i]["cve_id"] + ":\n"
