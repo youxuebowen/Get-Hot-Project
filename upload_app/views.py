@@ -383,9 +383,14 @@ def success(request):
 
 # 获取文章url
 def get_article_url(request):
-    # 获取热门文章的链接，榜单三天刷一次，每三天运行一次就行了
-    # articles = get_artical_link()
     articles = get_bokeyuan_link()
+    if insert_articles(articles):
+        return JsonResponse({"message": "文章数据已成功获取并插入数据库"}, json_dumps_params={'ensure_ascii': False})
+    else:
+        return JsonResponse({"message": "插入失败"}, json_dumps_params={'ensure_ascii': False})
+
+def get_Juejin_url(request):
+    articles = get_Juejin_link()
     if insert_articles(articles):
         return JsonResponse({"message": "文章数据已成功获取并插入数据库"}, json_dumps_params={'ensure_ascii': False})
     else:
@@ -445,18 +450,22 @@ def insert_articles(articles):
 # 获取文章总结
 def get_article_descriptions(request):
     # 更新description和tag
-    informations = read_articles_sql()  # 获取description为空的记录,且type=2是掘金类型
+    informations = read_articles_sql(2)  # 获取description为空的记录,且type=2是掘金类型
     # articles_tag, articles_description = get_articles_description_tag(sql_links)  # 获取这些记录的 description
     articles_tag, articles_description = get_bokeyuan_description_and_tag(informations)
     update_bokeyuan_descriptions(informations, articles_tag, articles_description)  # 更新对应记录
     return JsonResponse({"message": f"成功更新 {len(articles_description)} 条文章描述及标签"},
                         json_dumps_params={'ensure_ascii': False})
-# 获取description为空的记录,且type=2是掘金类型
-def read_articles_sql():
+# 获取description为空的记录,
+def read_articles_sql(type):
     results = []
     # 使用 ORM 查询 description 字段为空的记录，限制为三个防止爬取不回来
     limit_count = 3
-    articles = HotProjects.objects.filter(description='', type=2).values('id', 'url', 'name', 'type', 'if_sent')[:limit_count]
+    # articles = HotProjects.objects.filter(description='', type=type).values('id', 'url', 'name', 'type', 'if_sent')[:limit_count]
+    articles = HotProjects.objects.filter(
+        Q(description='') | Q(description__isnull=True),
+        type=type
+    ).values('id', 'url', 'name', 'type', 'if_sent')[:limit_count]
     # 转换为字典格式
     for row in articles:
         results.append({
@@ -577,95 +586,105 @@ def update_bokeyuan_descriptions(sql_links, articles_tag, articles_descriptions)
         except HotProjects.DoesNotExist:
             print(f"ID 为 {article_id} 的记录不存在")
     return True
-# def get_articles_description_tag(informations):
-#     articles_description = []
-#     articles_tag = []
-#     # a = 1
-#     headers_list = {
-#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-#         "Referer": "https://juejin.cn/",
-#     }
-#     url_3 = 'https://yuanqi.tencent.com/openapi/v1/agent/chat/completions'
-#     token_1 = "P0DLg1Kduqe5jIDQvSyTsqc9vhmhp0El"
-#     assistant_id_1 = "ZvxqWUOM05De"
-#     # 获取 tag
-#     token_2 = "XAoYVGiSgGADDDmzKd7IQC1uI6bOWCnB"
-#     assistant_id_2 = "GyUeYNOLbmaq"
-#     # 获取摘要
-#     token_3 = "PrWV3i71LuSEJ9cSkK9MuhNXe3b8Za0Z"
-#     assistant_id_3 = "mqm8WNPSOBi7"
-#     token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
-#     assistant_id_4 = "eA3znc5W7lRs"
-#     token = token_4
-#     assistant_id = assistant_id_4
-#
-#     for info in informations:
-#         link = info['url']
-#         try:
-#             try:
-#                 # 记录不同级别的日志
-#                 logger.debug("这是一条DEBUG日志（调试信息）")
-#                 # 获取网页内容
-#                 # 使用 Selenium 获取网页内容
-#                 page_source = get_page_content(link)
-#                 if page_source is None:
-#                     continue
-#                 soup = BeautifulSoup(page_source, features='html.parser')
-#                 # 获取网页内容
-#                 # res = requests.get(link, headers=headers_list, timeout=10)
-#                 # res.raise_for_status()  # 检查请求是否成功
-#                 # soup = BeautifulSoup(res.text, features='html.parser')
-#             except Exception as e:
-#                 logger.error("发生错误: %s", str(e), exc_info=True)  # 记录异常堆栈
-#                 return HttpResponseServerError("未爬到具体内容")
-#
-#             # 调用 API
-#             headers = {
-#                 'X-Source': 'openapi',
-#                 'Content-Type': 'application/json',
-#                 'Authorization': f'Bearer {token}',
-#             }
-#             data_1 = {
-#                 "assistant_id": f"{assistant_id}",
-#                 "user_id": "username",
-#                 "stream": False,
-#                 "messages": [
-#                     {
-#                         "role": "user",
-#                         "content": [
-#                             {
-#                                 "type": "text",
-#                                 "text": soup.text[:100000],  # 限制文本长度，避免超出 API 限制
-#                             }
-#                         ]
-#                     }
-#                 ]
-#             }
-#
-#             # 发送请求到智能体 API
-#             api_res = requests.post(url_3, headers=headers, json=data_1, timeout=30)
-#             api_res.raise_for_status()  # 检查 API 请求是否成功
-#
-#             # 解析 JSON 响应
-#             try:
-#                 data_artical = api_res.json()
-#                 content_description = data_artical['choices'][0]["message"]["content"]
-#                 description_tag = content_description.rsplit('#', 1)
-#                 articles_description.append({"description": description_tag[1]})
-#                 articles_tag.append({"tag": description_tag[0]})
-#                 print(f"成功获取链接 {link} 的描述")
-#
-#             except (KeyError, IndexError) as e:
-#                 print(f"解析 API 响应失败: {e}")
-#                 print(f"API 返回内容: {api_res.text[:500]}")  # 打印部分响应内容用于调试
-#             except requests.exceptions.JSONDecodeError:
-#                 print(f"API 返回非 JSON 格式内容: {api_res.text[:500]}")
-#
-#         except requests.exceptions.RequestException as e:
-#             print(f"处理链接 {link} 时出错: {e}")
-#
-#         # 限制处理数量（测试用）
-#     return articles_tag, articles_description
+
+def get_Juejin_descriptions(request):
+    # 更新description和tag
+    informations = read_articles_sql(3)  # 获取description为空的记录,
+    articles_tag, articles_description = get_Juejin_description_tag(informations)  # 获取这些记录的 description
+    # articles_tag, articles_description = get_bokeyuan_description_and_tag(informations)
+    # 无所谓
+    update_bokeyuan_descriptions(informations, articles_tag, articles_description)  # 更新对应记录
+    return JsonResponse({"message": f"成功更新 {len(articles_description)} 条文章描述及标签"},
+                        json_dumps_params={'ensure_ascii': False})
+def get_Juejin_description_tag(informations):
+    articles_description = []
+    articles_tag = []
+    # a = 1
+    headers_list = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Referer": "https://juejin.cn/",
+    }
+    url_3 = 'https://yuanqi.tencent.com/openapi/v1/agent/chat/completions'
+    token_1 = "P0DLg1Kduqe5jIDQvSyTsqc9vhmhp0El"
+    assistant_id_1 = "ZvxqWUOM05De"
+    # 获取 tag
+    token_2 = "XAoYVGiSgGADDDmzKd7IQC1uI6bOWCnB"
+    assistant_id_2 = "GyUeYNOLbmaq"
+    # 获取摘要
+    token_3 = "PrWV3i71LuSEJ9cSkK9MuhNXe3b8Za0Z"
+    assistant_id_3 = "mqm8WNPSOBi7"
+    token_4 = "sfl5dL6WZGH2X4IK5w9NBNZOQ2Se0tDH"
+    assistant_id_4 = "eA3znc5W7lRs"
+    token = token_4
+    assistant_id = assistant_id_4
+
+    for info in informations:
+        link = info['url']
+        try:
+            try:
+                # 记录不同级别的日志
+                logger.debug("这是一条DEBUG日志（调试信息）")
+                # 获取网页内容
+                # 使用 Selenium 获取网页内容
+                # page_source = get_page_content(link)
+                # if page_source is None:
+                #     continue
+                # soup = BeautifulSoup(page_source, features='html.parser')
+                # 获取网页内容
+                res = requests.get(link, headers=headers_list, timeout=30)
+                res.raise_for_status()  # 检查请求是否成功
+                soup = BeautifulSoup(res.text, features='html.parser')
+            except Exception as e:
+                logger.error("发生错误: %s", str(e), exc_info=True)  # 记录异常堆栈
+                return HttpResponseServerError("未爬到具体内容")
+
+            # 调用 API
+            headers = {
+                'X-Source': 'openapi',
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {token}',
+            }
+            data_1 = {
+                "assistant_id": f"{assistant_id}",
+                "user_id": "username",
+                "stream": False,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": soup.text[:5000],  # 限制文本长度，避免超出 API 限制
+                            }
+                        ]
+                    }
+                ]
+            }
+
+            # 发送请求到智能体 API
+            api_res = requests.post(url_3, headers=headers, json=data_1, timeout=30)
+            api_res.raise_for_status()  # 检查 API 请求是否成功
+
+            # 解析 JSON 响应
+            try:
+                data_artical = api_res.json()
+                content_description = data_artical['choices'][0]["message"]["content"]
+                description_tag = content_description.rsplit('#', 1)
+                articles_description.append({"description": description_tag[1]})
+                articles_tag.append({"tag": description_tag[0]})
+                print(f"成功获取链接 {link} 的描述")
+
+            except (KeyError, IndexError) as e:
+                print(f"解析 API 响应失败: {e}")
+                print(f"API 返回内容: {api_res.text[:500]}")  # 打印部分响应内容用于调试
+            except requests.exceptions.JSONDecodeError:
+                print(f"API 返回非 JSON 格式内容: {api_res.text[:500]}")
+
+        except requests.exceptions.RequestException as e:
+            print(f"处理链接 {link} 时出错: {e}")
+
+        # 限制处理数量（测试用）
+    return articles_tag, articles_description
 # def get_bokeyuan_description_and_tag(informations):
 #     articles_description = []
 #     articles_tag = []
@@ -1102,55 +1121,55 @@ def get_hot_projects():
 
 
 # 获取文章列表信息，返回列表/字典/
-# def get_artical_link():
-#     url_artical_link = "https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot"
-#
-#     headers = {
-#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-#         "Referer": "https://juejin.cn/",
-#     }
-#
-#     try:
-#         response = requests.get(url_artical_link, headers=headers, timeout=10)
-#         response.raise_for_status()
-#
-#         data = response.json()
-#
-#         # 检查API返回状态
-#         if data.get("err_no") != 0 or "data" not in data:
-#             print(f"API返回错误: {data.get('err_msg', '未知错误')}")
-#             return []
-#
-#         # articles = data["data"][:50]
-#         # 每次爬取二十个url
-#         articles = data["data"][:20]
-#         results = []
-#         for article in articles:
-#             # 确保content字段存在
-#             if "content" not in article:
-#                 continue
-#
-#             content = article["content"]
-#             title = content.get("title", "无标题")
-#             article_id = content.get("content_id", "")
-#
-#             # 构建完整URL
-#             article_url = f"https://juejin.cn/post/{article_id}" if article_id else ""
-#
-#             results.append({
-#                 "url": article_url,
-#                 "name": title,
-#                 "content": "",
-#                 "description": "",
-#                 "tag": " ",
-#                 "type": 2,
-#                 "if_sent": 0,
-#             })
-#
-#         return results
-#     except Exception as e:
-#         print(f"爬取失败: {str(e)}")
-#         return []
+def get_Juejin_link():
+    url_artical_link = "https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Referer": "https://juejin.cn/",
+    }
+
+    try:
+        response = requests.get(url_artical_link, headers=headers, timeout=10)
+        response.raise_for_status()
+
+        data = response.json()
+
+        # 检查API返回状态
+        if data.get("err_no") != 0 or "data" not in data:
+            print(f"API返回错误: {data.get('err_msg', '未知错误')}")
+            return []
+
+        # articles = data["data"][:50]
+        # 每次爬取二十个url
+        articles = data["data"][:20]
+        results = []
+        for article in articles:
+            # 确保content字段存在
+            if "content" not in article:
+                continue
+
+            content = article["content"]
+            title = content.get("title", "无标题")
+            article_id = content.get("content_id", "")
+
+            # 构建完整URL
+            article_url = f"https://juejin.cn/post/{article_id}" if article_id else ""
+
+            results.append({
+                "url": article_url,
+                "name": title,
+                "content": "",
+                "description": "",
+                "tag": " ",
+                "type": 3, # 掘金设置为3
+                "if_sent": 0,
+            })
+
+        return results
+    except Exception as e:
+        print(f"爬取失败: {str(e)}")
+        return []
 # 将文章url数据存入库中
 
 

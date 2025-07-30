@@ -20,6 +20,8 @@ urlpatterns = [
     path('api/v1/save_github_readme', views.save_github_readme, name='save_github_readme'),
     # path('upload/', views.upload_excel, name='upload'),
     path('api/v1/get_article_url', views.get_article_url, name='get_article_url'),
+    path('api/v1/get_Juejin_url', views.get_Juejin_url, name='get_Juejin_url'),
+    path('api/v1/get_Juejin_descriptions', views.get_Juejin_descriptions, name='get_Juejin_descriptions'),
 
 
 
