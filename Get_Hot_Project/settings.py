@@ -23,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-tl55p^l&j1ctfbz^#dx0(evbz*+*_sh_^dj6a7kiwa@%6(9s&c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# 上线之后改为false，ALLOWED_HOSTS也需要改
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = ['139.224.114.224', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 # 注册子应用
@@ -37,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Send_Email.apps.SendEmailConfig",  # 注册子应用，爬取的数据存储到数据库中，并发送邮件
     "upload_app.apps.UploadAppConfig",  # 注册子应用，上传excel文件，将数据存储到数据库中
 ]
 
@@ -56,7 +56,7 @@ ROOT_URLCONF = "Get_Hot_Project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],  # 添加模板目录
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sky_take_out',        # 数据库名称
         'USER': 'root',       # 数据库用户名
-        'PASSWORD': '123456', # 数据库密码
+        'PASSWORD': '@Get123456', # 数据库密码
         'HOST': 'localhost',        # 数据库服务器地址
         'PORT': '3306',             # 数据库端口(默认3306)
         'OPTIONS': {
@@ -120,19 +120,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-Hans' #"en-us"设置语言
 
-TIME_ZONE = "UTC"
-
+# TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'upload_app/static')]
-
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, '..', 'static'),  # 新增这行
+# ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -140,9 +141,51 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # 邮箱配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
+#EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
+EMAIL_HOST = 'smtp.js.chinamobile.com'
 EMAIL_PORT = 465  # 邮件服务器端口
-EMAIL_HOST_USER = "2215225145@qq.com"  # 邮箱
-EMAIL_HOST_PASSWORD = 'mtmvdhbyshdkdhge'  # 邮箱授权码
+EMAIL_HOST_USER = ""  # 邮箱
+EMAIL_HOST_PASSWORD = ''  # 邮箱授权码
 EMAIL_USE_TLS = False # 与SMTP服务器通信时，是否启动TLS链接(安全链接)。默认是false
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django.log',  # 日志文件路径
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'upload_app': {  # 替换为你的应用名
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',  # 记录更详细的日志
+            'propagate': False,
+        },
+    },
+}
 

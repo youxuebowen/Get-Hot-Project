@@ -1,0 +1,266 @@
+      
+.cve-container {
+            box-sizing: border-box;
+            margin: 0 auto;
+            padding: 0;
+            --cve-primary: #4a6cf7;
+            --cve-primary-hover: #3451d1;
+            --cve-border: #ddd;
+            --cve-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --cve-radius: 8px;
+            --cve-text: #333;
+            --cve-light-bg: #f8f9fa;
+            --cve-success: #28a745;
+            --cve-error: #dc3545;
+            width: 100%;
+            max-width: 100%;
+            padding: 30px;
+            background: white;
+            border-radius: var(--cve-radius);
+            box-shadow: var(--cve-shadow);
+        }
+        
+        .cve-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cve-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .cve-header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cve-search-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+        
+        .cve-search-section {
+            flex: 2;
+            min-width: 280px;
+        }
+        
+        .cve-time-section {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .cve-search-box {
+            display: flex;
+            border: 2px solid var(--cve-border);
+            border-radius: var(--cve-radius);
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+        
+        .cve-search-box:focus-within {
+            border-color: var(--cve-primary);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+        }
+        
+        .cve-search-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .cve-search-input::placeholder {
+            color: #999;
+        }
+        
+        .cve-search-btn {
+            background: var(--cve-primary);
+            color: white;
+            border: none;
+            padding: 0 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cve-search-btn:hover {
+            background: var(--cve-primary-hover);
+        }
+        
+        .cve-option-group {
+            position: relative;
+        }
+        
+        .cve-option-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .cve-option-wrapper {
+            position: relative;
+        }
+        
+        .cve-time-range-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            border: 2px solid var(--cve-border);
+            border-radius: var(--cve-radius);
+            cursor: pointer;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+        
+        .cve-time-range-trigger:hover {
+            border-color: var(--cve-primary);
+        }
+        
+        .cve-date-picker {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 10px;
+            background: white;
+            border-radius: var(--cve-radius);
+            box-shadow: var(--cve-shadow);
+            padding: 20px;
+            width: 100%;
+            z-index: 100;
+            display: none;
+        }
+        
+        .cve-date-picker.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .cve-date-inputs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .cve-date-group {
+            flex: 1;
+        }
+        
+        .cve-date-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .cve-date-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--cve-border);
+            border-radius: var(--cve-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .cve-date-input:focus {
+            border-color: var(--cve-primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+        }
+        
+        .cve-date-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .cve-date-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cve-date-btn.quick {
+            background: var(--cve-light-bg);
+            color: var(--cve-text);
+        }
+        
+        .cve-date-btn.quick:hover {
+            background: #e9ecef;
+        }
+        
+        .cve-date-btn.apply {
+            background: var(--cve-primary);
+            color: white;
+            margin-left: auto;
+        }
+        
+        .cve-date-btn.apply:hover {
+            background: var(--cve-primary-hover);
+        }
+        
+        .cve-example {
+            margin-top: 40px;
+            padding: 20px;
+            background: var(--cve-light-bg);
+            border-radius: var(--cve-radius);
+        }
+        
+        .cve-example h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .cve-example p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .cve-example code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .cve-footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .cve-search-wrapper {
+                flex-direction: column;
+            }
+            
+            .cve-date-inputs {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }

@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path,include
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("send_email/", include("Send_Email.urls")),
+    # 路由：api/v1/
     path('', include('upload_app.urls')),
+
 ]
