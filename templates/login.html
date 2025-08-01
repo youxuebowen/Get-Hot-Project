@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WideSeek信息脉搏AI助手 - 登录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+</head>
+<body>
+    {% load static %}
+    <!-- 粒子画布 -->
+    <canvas id="login-particle-canvas"></canvas>
+    
+    <!-- 头部区域 -->
+    <div class="login-header">
+        <div class="login-logo">
+            <img src="{% static 'image/gongsi1.png' %}" alt="公司logo" />
+            <span class="login-logo-text">WideSeek信息脉搏AI助手</span>
+            <span class="login-sub-title">苏云邮侠团队提供</span>
+        </div>
+        <!-- 时间展示 -->
+        <div class="login-date-display">
+            <i class="fas fa-calendar-alt"></i>
+            <span id="login-current-date">2025年8月1日 星期五</span>
+        </div>
+    </div>
+    
+    <!-- 装饰元素 -->
+    <div class="login-decoration login-circle" style="width: 400px; height: 400px; top: -100px; right: -100px; animation: login-pulse 8s infinite;"></div>
+    <div class="login-decoration login-circle" style="width: 300px; height: 300px; bottom: -50px; left: -50px; animation: login-pulse 6s infinite 2s;"></div>
+    
+    <!-- 登录框区域 -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-title-container">
+                <h2 class="login-title">安全登录</h2>
+                <p class="login-subtitle">访问您的“热点技术推送平台”</p>
+            </div>
+            
+            <form class="login-form" method="post">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                    <div class="login-error-message">
+                        <i class="fas fa-exclamation-circle"></i> {{ form.non_field_errors.0 }}
+                    </div>
+                {% endif %}
+
+                <!-- 用户 身份过期-->
+                {% if request.GET.message %}
+                    <div class="login-error-message">
+                        <i class="fas fa-info-circle"></i> {{ request.GET.message }}
+                    </div>
+                {% endif %}
+                
+                <div class="login-form-group">
+                    {{ form.account }}
+                    <div class="login-input-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% if form.account.errors %}
+                        <div class="login-field-error">{{ form.account.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="login-form-group">
+                    {{ form.password }}
+                    <div class="login-input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="login-field-error">{{ form.password.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+
+                <div class="login-btn-container">
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> 登录系统
+                    </button>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                © 2025 WideSeek信息脉搏AI助手 | 安全访问系统
+            </div>
+        </div>
+    </div>
+
+    <!-- js -->
+<script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>

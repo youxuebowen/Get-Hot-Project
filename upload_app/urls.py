@@ -5,8 +5,12 @@ app_name = 'upload_app'
 
 urlpatterns = [
     # path(路由，视图名)
+    path('apps/v1/add_user', views.add_user, name='add_user'),
     path('apps/v1/upload_excel', views.upload_excel, name='upload_excel'),
     path('apps/v1/index', views.index, name='index'),
+    path('apps/v1/login', views.login, name='login'),
+    path('apps/v1/logout', views.logout, name='logout'),
+    path('apps/v1/index_customer', views.index_customer, name='index_customer'),
     # path('apps/v1/query_hot_projects', views.query_hot_projects, name='query_hot_projects'),
     # path('apps/v1/get_github', views.get_github, name='get_github'),
     # path('apps/v1/run_article_functions', views.run_article_functions, name='run_article_functions'),

@@ -189,3 +189,11 @@ LOGGING = {
     },
 }
 
+# 会话设置
+# 会话有效期为1小时（3600秒）
+SESSION_COOKIE_AGE = 1800
+# 浏览器关闭时会话过期
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# 会话在不活动状态下过期
+SESSION_SAVE_EVERY_REQUEST = True
+

@@ -1,22 +1,30 @@
 from django.db import models
-
+from django.contrib.auth.hashers import make_password
 # Create your models here.
 
-class User(models.Model):
-    username = models.CharField(max_length=100, verbose_name="用户名")
-    email = models.EmailField(verbose_name="邮箱")
-    verification_code = models.CharField(max_length=100, verbose_name="校验码")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新时间")
+
+class UserTable(models.Model):
+    account = models.CharField(max_length=50, unique=True, verbose_name='账号')
+    password = models.CharField(max_length=128, verbose_name='密码')
+    is_admin = models.BooleanField(default=False, verbose_name='是否是管理员')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    last_login = models.DateTimeField(null=True, blank=True, verbose_name='最后登录时间')
+    is_active = models.BooleanField(default=True, verbose_name='是否激活')
 
     class Meta:
-        db_table = '用户表'
-        verbose_name = "用户"
-        verbose_name_plural = "用户"
+        db_table = 'user_table'
+        verbose_name = '用户表'
+        verbose_name_plural = '用户表'
+        ordering = ['-create_time']
+
+    def save(self, *args, **kwargs):
+        # 保存时自动对密码进行哈希处理
+        if not self.password.startswith('pbkdf2_sha256$'):
+            self.password = make_password(self.password)  # 哈希密码
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.username
-
+        return self.account
 class HotProjects(models.Model):
     # github项目名/文章标题
     name = models.CharField(max_length=100)

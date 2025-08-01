@@ -31,6 +31,12 @@ from django.db.models import Q, Sum  # Mysql多条件查询
 import smtplib  # 提供了SMTP客户端会话对象，用于向SMTP服务器发送邮件
 from email.mime.text import MIMEText  # 用于创建文本类型的邮件内容
 import logging
+from upload_app.models import UserTable
+from .decorators import admin_required, login_required
+
+
+from django.contrib.auth import login as auth_login
+from .forms import LoginForm
 
 # 获取当前模块的Logger实例
 logger = logging.getLogger(__name__)
@@ -41,10 +47,66 @@ GITHUB_API_URL = "https://api.github.com"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
 GITHUB_TOKEN = None
 
+# 创建用户
+@login_required
+def add_user(request):
+    if request.method == 'GET':
+        account = request.GET.get('account')
+        password = request.GET.get('password')
+        is_admin = request.GET.get('is_admin') == 'on'
+        user = UserTable.objects.create(account=account, password=password, is_admin=is_admin)
+        return JsonResponse({'success': True, 'user_id': user.id})
+    return JsonResponse({'success': False})
 # 初始界面
+@login_required
 def index(request):
+    # 创建管理员用户
+    # admin_user = UserTable(
+    #     account='18851712933',
+    #     password='123456',
+    #     is_admin=True
+    # )
+    # admin_user.save()
+    # normal_user = UserTable(
+    #     account='18683517156',
+    #     password='123456',
+    #     is_admin=False
+    # )
+    # normal_user.save()
     return render(request, 'index.html')
 
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # 获取验证通过的用户
+            user = form.cleaned_data['user']
+            # 更新最后登录时间
+            user.last_login = datetime.now()
+            user.save()
+            # 在session中存储用户信息
+            request.session['user_id'] = user.id
+            request.session['account'] = user.account
+            request.session['is_admin'] = user.is_admin
+            request.session['is_login'] = True
+            # 根据用户类型决定跳转页面
+            if user.is_admin:
+                # 管理员跳转到index
+                # return redirect('/apps/v1/index')
+                return JsonResponse({'success': True, 'redirect_url': '/apps/v1/index'})
+            else:
+                # 普通用户跳转到index_customer
+                # return redirect('/apps/v1/index_customer')
+                return JsonResponse({'success': True, 'redirect_url': '/apps/v1/index_customer'})
+        else:
+            # 登录失败，返回错误信息
+            return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
+@login_required
+def index_customer(request):
+    return render(request, 'index_customer.html')
 # def upload_excel(request):
 #     # 上传Excel文件，包含用户的邮箱和校验码
 #     if request.method == 'POST':
@@ -105,6 +167,7 @@ def index(request):
 
 # 搜索查询
 # 上传excel
+@admin_required
 def upload_excel(request):
     if request.method == 'POST':
         form = ExcelUploadForm(request.POST, request.FILES)
@@ -265,7 +328,7 @@ def content_table_api(request):
             }
             print(f"API错误详情: {error_details}")
             return JsonResponse({'error': f'服务器内部错误: {str(e)}', 'details': error_details}, status=500)
-
+@admin_required
 def update_chosen_api(request):
     if request.method == 'POST':
         try:
@@ -288,7 +351,7 @@ def update_chosen_api(request):
     else:
         return JsonResponse({'success': False, 'error': '不支持的请求方法'}, status=405)
 
-
+@login_required
 def get_chosen_content_api(request):
     try:
         # 获取查询参数
@@ -324,11 +387,11 @@ def get_chosen_content_api(request):
         print(f"获取已选内容错误: {str(e)}")
         return JsonResponse({'error': str(e)}, status=500)
 
-
+@login_required
 def fail(request):
     return render(request, 'fail.html')
 
-
+@login_required
 def success(request):
     return render(request, 'success.html')
 
@@ -1016,7 +1079,7 @@ def cve_email_send(request):
 
     return JsonResponse({"code": 200, "message": "Successful"})
 
-
+@login_required
 def cve_info_list(request):
     if request.GET.get('cveId') == None or request.GET.get('pageFrom') == None or request.GET.get('pageSize') == None or request.GET.get('dateFrom') == None or request.GET.get('dateTo') == None:
         return JsonResponse({"code": 500, "message": "Some parameter is missed"})
@@ -1106,7 +1169,7 @@ def send_welcome_email(usernames, Emails, verification_codes):
             return False
     return True
 
-
+@admin_required
 # 更新数据库，清空待发送列表，状态改为已发送
 def update_database():
     HotProjects.objects.filter(if_chosen=1).update(if_chosen=0, if_sent=1)
@@ -1385,6 +1448,7 @@ def fetch_readme_content(repo_name):
 
 
 # 盒子/图表函数
+@login_required
 def project_tags_api(request):
     try:
         # 只查询type为1的文章数据
@@ -1432,7 +1496,7 @@ def project_tags_api(request):
         print(f"project标签统计API错误: {str(e)}")
         return JsonResponse({'error': str(e)}, status=500)
 
-
+@login_required
 def article_tags_api(request):
     try:
         # 只查询type为2的文章数据
@@ -1480,7 +1544,7 @@ def article_tags_api(request):
         print(f"标签统计API错误: {str(e)}")
         return JsonResponse({'error': str(e)}, status=500)
 
-
+@login_required
 def stats_data_api(request):
     try:
         # 获取今日和昨日的日期
@@ -1601,7 +1665,7 @@ def stats_data_api(request):
 
 # 趋势数据API
 
-
+@login_required
 def trend_data_api(request):
     try:
         # 获取当前日期
@@ -1684,3 +1748,13 @@ def trend_data_api(request):
     except Exception as e:
         print(f"趋势数据API错误: {str(e)}")
         return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def logout(request):
+    if request.method == 'POST':
+        # 清除session数据
+        request.session.flush()
+        # 返回成功响应
+        return JsonResponse({'ok': True, 'message': '退出登录成功'})
+    else:
+        return JsonResponse({'error': '不支持的请求方法'}, status=405)
